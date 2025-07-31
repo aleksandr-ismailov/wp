@@ -1,0 +1,45 @@
+{
+	"compilerOptions": {
+		"target": "es2020",
+		"lib": [
+			"dom",
+			"es2020"
+		],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"declaration": false,
+		"declarationMap": false,
+		"sourceMap": true,
+		"removeComments": false,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"exactOptionalPropertyTypes": false,
+		"noImplicitReturns": false,
+		"noImplicitOverride": false,
+		"noPropertyAccessFromIndexSignature": false,
+		"noUncheckedIndexedAccess": false
+	},
+	"include": [
+		"wp-content/**/src/**/*",
+		"*.ts",
+		"*.tsx",
+		"*.js",
+		"*.jsx"
+	],
+	"exclude": [
+		"node_modules",
+		"wp-content/**/build/**/*",
+		"wp-content/**/node_modules/**/*"
+	]
+}

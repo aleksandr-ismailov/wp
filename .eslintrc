@@ -1,0 +1,68 @@
+{
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true,
+		"jest/globals": true
+	},
+	"plugins": [ "jest" ],
+	"extends": [
+		"plugin:@wordpress/eslint-plugin/esnext",
+		"plugin:@wordpress/eslint-plugin/i18n",
+		"plugin:@wordpress/eslint-plugin/react"
+	],
+	"globals": {
+		"wp": "readonly",
+		"jQuery": "readonly",
+		"HTMLElement": true
+	},
+
+	"ignorePatterns": [
+		// Build and distribution directories
+		"build/**/*",
+		"build-*/**/*",
+		"dist/**/*",
+
+		// Dependencies and packages
+		"node_modules/**/*",
+
+		// Temp files
+		"_temp/**/*",
+
+		// Test results and artifacts
+		"test-results/**/*",
+		"artifacts/**/*",
+		"allure-*/**/*",
+
+		// WordPress content exclusions
+		"wp-content/**/e2e/*.js",
+		"wp-content/**/build/**/*",
+
+		// Lock files and logs
+		"*.lock",
+		"*.log",
+		"*.cache",
+
+		// Generated files
+		"*.d.ts",
+		"tsconfig.tsbuildinfo"
+	],
+	"rules": {
+		"@wordpress/i18n-text-domain": [
+			"error",
+			{
+				"allowedTextDomain": "wordpress-block-development-learning"
+			}
+		],
+		"no-console": "off",
+		"jsdoc/no-undefined-types": "off"
+	},
+	"overrides": [
+		{
+			"files": [ "playwright.config.js" ],
+			"rules": {
+				"import/no-unresolved": "off"
+			}
+		}
+	]
+}

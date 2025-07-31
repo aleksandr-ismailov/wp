@@ -1,0 +1,221 @@
+{
+	"name": "WP Dev",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "devcontainer",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/php:1": {
+			"version": "8.2",
+			"installComposer": true
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true
+		},
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"installOhMyZsh": true,
+			"configureZshAsDefaultShell": true,
+			"username": "root"
+		}
+	},
+	"onCreateCommand": "corepack enable && corepack prepare yarn@4.5.3 --activate && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp",
+	"forwardPorts": [
+		8888,
+		8080,
+		3000,
+		3001
+	],
+	"portsAttributes": {
+		"8888": {
+			"label": "WordPress Site",
+			"onAutoForward": "notify"
+		},
+		"8080": {
+			"label": "phpMyAdmin",
+			"onAutoForward": "silent"
+		},
+		"3000": {
+			"label": "Development Server",
+			"onAutoForward": "silent"
+		}
+	},
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"remoteUser": "root",
+	"mounts": [
+		"source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
+		"source=${localWorkspaceFolderBasename}-composer,target=${containerWorkspaceFolder}/vendor,type=volume",
+		"source=${localWorkspaceFolderBasename}-playwright,target=${containerWorkspaceFolder}/test-results,type=volume",
+		"source=${localWorkspaceFolderBasename}-npm-cache,target=/root/.npm,type=volume",
+		"source=${localWorkspaceFolderBasename}-composer-cache,target=/root/.composer/cache,type=volume",
+		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+	],
+	"containerEnv": {
+		"DOCKER_BUILDKIT": "1",
+		"NODE_OPTIONS": "--max-old-space-size=4096",
+		"NPM_CONFIG_CACHE": "/root/.npm",
+		"COMPOSER_CACHE_DIR": "/root/.composer/cache",
+		"XDEBUG_MODE": "off"
+	},
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}:/workspaces/${localWorkspaceFolderBasename}/node_modules/.bin"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+				"wordpresstoolbox.wordpress-toolbox",
+				"johnbillion.vscode-wordpress-hooks",
+				"esbenp.prettier-vscode",
+				"dbaeumer.vscode-eslint",
+				"ms-vscode.vscode-typescript-next",
+				"ms-playwright.playwright",
+				"eamodio.gitlens",
+				"editorconfig.editorconfig",
+				"ms-azuretools.vscode-docker",
+				"github.copilot",
+				"github.copilot-chat",
+				"christian-kohler.path-intellisense",
+				"pkief.material-icon-theme",
+				"dsznajder.es7-react-js-snippets",
+				"visualstudioexptteam.vscodeintellicode"
+			],
+			"settings": {
+				"workbench.iconTheme": "material-icon-theme",
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"editor.formatOnSave": true,
+				"editor.renderLineHighlight": "gutter",
+				"editor.glyphMargin": true,
+				"editor.inlayHints.enabled": "on",
+				"editor.bracketPairColorization.enabled": true,
+				"editor.guides.bracketPairs": "active",
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit",
+					"source.organizeImports": "explicit",
+					"source.addMissingImports": "explicit"
+				},
+				"intelephense.files.maxSize": 5000000,
+				"typescript.preferences.quoteStyle": "single",
+				"typescript.preferences.importModuleSpecifier": "relative",
+				"typescript.inlayHints.parameterNames.enabled": "all",
+				"typescript.inlayHints.variableTypes.enabled": true,
+				"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+				"javascript.preferences.quoteStyle": "single",
+				"javascript.inlayHints.parameterNames.enabled": "all",
+				"javascript.inlayHints.variableTypes.enabled": true,
+				"emmet.includeLanguages": {
+					"javascript": "javascriptreact"
+				},
+				"github.copilot.enable": {
+					"*": true,
+					"yaml": true,
+					"plaintext": false,
+					"markdown": true
+				},
+				"files.eol": "\n",
+				"files.associations": {
+					"post-create.sh": "shellscript",
+					"*.sh": "shellscript"
+				},
+				"workbench.startupEditor": "none",
+				"extensions.autoUpdate": true,
+				"editor.minimap.enabled": true,
+				"editor.suggest.insertMode": "replace",
+				"editor.acceptSuggestionOnCommitCharacter": true,
+				"editor.acceptSuggestionOnEnter": "on",
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"terminal.integrated.fontSize": 14,
+				"terminal.integrated.fontFamily": "Consolas, 'Courier New', monospace",
+				"terminal.integrated.fontWeight": "normal",
+				"files.exclude": {
+					"**/.git": true,
+					"**/.svn": true,
+					"**/.hg": true,
+					"**/CVS": true,
+					"**/.DS_Store": true,
+					"**/node_modules/**": true,
+					"**/vendor/**": true,
+					"**/build/**": true,
+					"**/dist/**": true
+				},
+				"files.watcherExclude": {
+					"**/.git/objects/**": true,
+					"**/.git/subtree-cache/**": true,
+					"**/node_modules/**": true,
+					"**/vendor/**": true,
+					"**/build/**": true,
+					"**/dist/**": true
+				},
+				"search.exclude": {
+					"**/node_modules": true,
+					"**/vendor": true,
+					"**/build": true,
+					"**/build-*": true,
+					"**/dist": true,
+					"**/_temp": true,
+					"**/test-results": true,
+					"**/artifacts": true,
+					"**/composer.lock": true,
+					"**/.devcontainer": true,
+					"**/.eslintcache": true,
+					"**/allure-*": true
+				},
+				"git.enabled": true,
+				"git.decorations.enabled": true,
+				"git.enableSmartCommit": true,
+				"gitlens.currentLine.enabled": true,
+				"gitlens.codeLens.enabled": true,
+				"gitlens.gutterHeatmap.enabled": true,
+				"gitlens.blame.compact": false,
+				"gitlens.blame.heatmap.enabled": true,
+				"gitlens.changes.locations": [
+					"gutter",
+					"line",
+					"overview"
+				],
+				"gitlens.showWelcomeOnInstall": false,
+				"gitlens.showWhatsNewAfterUpgrades": false,
+				"intelephense.format.enable": true,
+				"intelephense.diagnostics.enable": true,
+				"intelephense.completion.triggerParameterHints": true,
+				"intelephense.completion.insertUseDeclaration": true,
+				"intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": false,
+				"intelephense.stubs": [
+					"wordpress"
+				],
+				"intelephense.environment.includePaths": [
+					"./vendor/php-stubs/wordpress-stubs"
+				],
+				"php.suggest.basic": false,
+				"php.validate.enable": false,
+				"prettier.requireConfig": true,
+				"prettier.useEditorConfig": true,
+				"eslint.workingDirectories": [
+					"."
+				],
+				"eslint.validate": [
+					"javascript",
+					"javascriptreact",
+					"typescript",
+					"typescriptreact"
+				],
+				"eslint.options": {
+					"cache": true,
+					"cacheLocation": ".eslintcache"
+				},
+				"eslint.run": "onSave",
+				"eslint.nodeEnv": null,
+				"path-intellisense.extensionOnImport": true,
+				"typescript.survey.enabled": false,
+				"npm.autoDetect": "off",
+				"gulp.autoDetect": "off",
+				"grunt.autoDetect": "off",
+				"jake.autoDetect": "off",
+				"telemetry.telemetryLevel": "off",
+				"workbench.enableExperiments": false,
+				"workbench.settings.enableNaturalLanguageSearch": false
+			}
+		}
+	}
+}

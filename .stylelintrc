@@ -1,0 +1,9 @@
+{
+	"extends": [ "@wordpress/stylelint-config/scss" ],
+	"ignoreFiles": [ "wp-content/**/build/**/*.css" ],
+	"rules": {
+		"function-parentheses-space-inside": null,
+		"selector-pseudo-class-parentheses-space-inside": null,
+		"selector-class-pattern": null
+	}
+}

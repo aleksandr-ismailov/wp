@@ -1,0 +1,82 @@
+services:
+    devcontainer:
+        image: mcr.microsoft.com/devcontainers/typescript-node:20
+        container_name: wp-dev-devcontainer
+        volumes:
+            - ..:/workspaces/wp:cached
+        command: sleep infinity
+        networks:
+            - wp-network
+        depends_on:
+            - wordpress
+            - mysql
+
+    wordpress:
+        image: wordpress:6.4-php8.2-apache
+        container_name: wp-dev-wordpress
+        ports:
+            - '8888:80'
+        environment:
+            WORDPRESS_DB_HOST: mysql
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME: wordpress
+            WORDPRESS_DEBUG: 1
+            WORDPRESS_DEBUG_LOG: 1
+            WORDPRESS_DEBUG_DISPLAY: 1
+            SCRIPT_DEBUG: 1
+        volumes:
+            - wordpress_data:/var/www/html
+            - ../wp-content:/var/www/html/wp-content
+        depends_on:
+            mysql:
+                condition: service_healthy
+        healthcheck:
+            test: ['CMD-SHELL', 'curl -f http://localhost || exit 1']
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
+        networks:
+            - wp-network
+
+    mysql:
+        image: mysql:8.0
+        container_name: wp-dev-mysql
+        environment:
+            MYSQL_DATABASE: wordpress
+            MYSQL_USER: wordpress
+            MYSQL_PASSWORD: wordpress
+            MYSQL_ROOT_PASSWORD: rootpassword
+        volumes:
+            - mysql_data:/var/lib/mysql
+        healthcheck:
+            test: ['CMD-SHELL', 'mysqladmin ping -h localhost --silent']
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
+        networks:
+            - wp-network
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: wp-dev-phpmyadmin
+        ports:
+            - '8080:80'
+        environment:
+            PMA_HOST: mysql
+            PMA_USER: wordpress
+            PMA_PASSWORD: wordpress
+        depends_on:
+            - mysql
+        networks:
+            - wp-network
+
+volumes:
+    wordpress_data:
+    mysql_data:
+
+networks:
+    wp-network:
+        driver: bridge

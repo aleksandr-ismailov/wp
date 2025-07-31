@@ -1,0 +1,58 @@
+{
+	"name": "wordpress-block-development-learning",
+	"version": "1.0.0",
+	"description": "WordPress Block Development Learning Environment",
+	"main": "index.js",
+	"scripts": {
+		"build": "yarn workspaces foreach --all run build",
+		"dev": "bash -c 'docker-compose -f .devcontainer/docker-compose.yml up -d && docker-compose -f .devcontainer/docker-compose.yml logs -f & yarn workspaces foreach --all --parallel run start'",
+		"stop": "docker-compose -f .devcontainer/docker-compose.yml down",
+		"restart": "docker-compose -f .devcontainer/docker-compose.yml restart",
+		"logs": "docker-compose -f .devcontainer/docker-compose.yml logs -f",
+		"status": "docker-compose -f .devcontainer/docker-compose.yml ps",
+		"packages-update": "yarn workspaces foreach --all run packages-update",
+		"plugin-zip": "yarn workspaces foreach --all run plugin-zip",
+		"test:e2e": "wp-scripts test-playwright",
+		"test:e2e:debug": "wp-scripts test-playwright --debug",
+		"lint": "yarn workspaces foreach --all run lint:css && yarn workspaces foreach --all run lint:js && yarn run lint:php",
+		"lint:php": "composer lint",
+		"format:php": "composer fix",
+		"prepare": "husky install",
+		"add-block": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest",
+		"add-block:dynamic": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest --variant=dynamic",
+		"setup-wp": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp core install --url=\"http://localhost:8888\" --title=\"WordPress Block Development\" --admin_user=\"admin\" --admin_password=\"admin\" --admin_email=\"admin@example.com\" --skip-email",
+		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello"
+	},
+	"lint-staged": {
+		"wp-content/**/*.{js,jsx,ts,tsx}": [
+			"yarn workspaces foreach --all run lint:js"
+		],
+		"*.php": [
+			"composer lint"
+		],
+		"wp-content/**/*.{css,scss}": [
+			"yarn workspaces foreach --all run lint:css"
+		]
+	},
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"blocks",
+		"learning"
+	],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@playwright/test": "^1.54.1",
+		"@types/node": "^22.16.5",
+		"@wordpress/scripts": "^30.20.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.3.0",
+		"typescript": "^5.8.3"
+	},
+	"packageManager": "yarn@4.5.3",
+	"workspaces": [
+		"wp-content/plugins/copyright-date-block",
+		"wp-content/themes/twentytwentyfour"
+	]
+}
