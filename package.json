@@ -20,8 +20,8 @@
 		"prepare": "husky install",
 		"add-block": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest",
 		"add-block:dynamic": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest --variant=dynamic",
-		"setup-wp": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp core install --url=\"http://localhost:8888\" --title=\"WordPress Block Development\" --admin_user=\"admin\" --admin_password=\"admin\" --admin_email=\"admin@example.com\" --skip-email",
-		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello"
+		"setup-wp": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp core install --url=\"http://localhost:8888\" --title=\"WordPress Block Development\" --admin_user=\"admin\" --admin_password=\"admin\" --admin_email=\"admin@example.com\" --skip-email --allow-root",
+		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello --allow-root"
 	},
 	"lint-staged": {
 		"wp-content/**/*.{js,jsx,ts,tsx}": [

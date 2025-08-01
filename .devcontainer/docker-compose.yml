@@ -12,7 +12,7 @@ services:
             - mysql
 
     wordpress:
-        image: wordpress:6.4-php8.2-apache
+        image: wordpress:6.7-php8.2-apache
         container_name: wp-dev-wordpress
         ports:
             - '8888:80'
@@ -25,6 +25,9 @@ services:
             WORDPRESS_DEBUG_LOG: 1
             WORDPRESS_DEBUG_DISPLAY: 1
             SCRIPT_DEBUG: 1
+            WORDPRESS_CONFIG_EXTRA: |
+                define( 'WP_DEVELOPMENT_MODE', 'theme' );
+        command: bash -c "curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && chmod +x /usr/local/bin/wp && docker-entrypoint.sh apache2-foreground"
         volumes:
             - wordpress_data:/var/www/html
             - ../wp-content:/var/www/html/wp-content

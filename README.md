@@ -4,7 +4,7 @@ Modern development environment for learning WordPress block development with Gut
 
 ## Technologies Used
 
--   **WordPress:** 6.4 with PHP 8.2
+-   **WordPress:** 6.7 with PHP 8.2
 -   **Database:** MySQL 8.0 with phpMyAdmin
 -   **Development:** Node.js 20, TypeScript, Yarn 4.5.3
 -   **Testing:** Playwright for E2E testing
