@@ -17,6 +17,7 @@
 		"lint": "yarn workspaces foreach --all run lint:css && yarn workspaces foreach --all run lint:js && yarn run lint:php",
 		"lint:php": "composer lint",
 		"format:php": "composer fix",
+		"format:css": "yarn workspaces foreach --all run format:css",
 		"prepare": "husky install",
 		"add-block": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest",
 		"add-block:dynamic": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest --variant=dynamic",
@@ -31,7 +32,7 @@
 			"composer lint"
 		],
 		"wp-content/**/*.{css,scss}": [
-			"yarn workspaces foreach --all run lint:css"
+			"wp-scripts lint-style --config .stylelintrc"
 		]
 	},
 	"keywords": [
@@ -53,6 +54,6 @@
 	"packageManager": "yarn@4.5.3",
 	"workspaces": [
 		"wp-content/plugins/copyright-date-block",
-		"wp-content/themes/twentytwentyfour"
+		"wp-content/themes/lesson-one"
 	]
 }

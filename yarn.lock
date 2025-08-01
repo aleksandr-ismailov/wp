@@ -10128,6 +10128,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lesson-one-theme@workspace:wp-content/themes/lesson-one":
+  version: 0.0.0-use.local
+  resolution: "lesson-one-theme@workspace:wp-content/themes/lesson-one"
+  languageName: unknown
+  linkType: soft
+
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
