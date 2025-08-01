@@ -1,0 +1,9 @@
+{
+	"name": "lesson-one-theme",
+	"version": "1.0.0",
+	"description": "WordPress Block Theme for Lesson One",
+	"scripts": {
+		"lint:css": "wp-scripts lint-style",
+		"format:css": "wp-scripts lint-style --fix"
+	}
+}

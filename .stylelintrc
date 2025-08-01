@@ -1,9 +1,21 @@
 {
 	"extends": [ "@wordpress/stylelint-config/scss" ],
-	"ignoreFiles": [ "wp-content/**/build/**/*.css" ],
+	"ignoreFiles": [
+		"wp-content/**/build/**/*.css",
+		"wp-content/plugins/akismet/**/*.css",
+		"wp-content/plugins/hello-dolly/**/*.css",
+		"wp-content/themes/twenty*/**/*.css",
+		"wp-content/mu-plugins/**/*.css",
+		"wp-content/upgrade/**/*.css",
+		"wp-content/upgrade-temp-backup/**/*.css",
+		"wp-content/languages/**/*.css",
+		"wp-content/uploads/**/*.css",
+		"node_modules/**/*.css",
+		"vendor/**/*.css",
+		"**/vendor/**/*.css",
+		"**/node_modules/**/*.css"
+	],
 	"rules": {
-		"function-parentheses-space-inside": null,
-		"selector-pseudo-class-parentheses-space-inside": null,
 		"selector-class-pattern": null
 	}
 }
