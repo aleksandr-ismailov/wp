@@ -32,7 +32,7 @@
 			"composer lint"
 		],
 		"wp-content/**/*.{css,scss}": [
-			"wp-scripts lint-style --config .stylelintrc"
+			"wp-scripts lint-style --config .stylelintrc.json"
 		]
 	},
 	"keywords": [
