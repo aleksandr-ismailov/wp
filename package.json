@@ -46,6 +46,7 @@
 	"devDependencies": {
 		"@playwright/test": "^1.54.1",
 		"@types/node": "^22.16.5",
+		"@wordpress/eslint-plugin": "^22.13.0",
 		"@wordpress/scripts": "^30.20.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^13.3.0",

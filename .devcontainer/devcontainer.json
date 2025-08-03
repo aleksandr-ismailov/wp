@@ -65,9 +65,11 @@
 		"vscode": {
 			"extensions": [
 				"bmewburn.vscode-intelephense-client",
+				"shevaua.phpcs",
 				"wordpresstoolbox.wordpress-toolbox",
 				"johnbillion.vscode-wordpress-hooks",
 				"esbenp.prettier-vscode",
+				"stylelint.vscode-stylelint",
 				"dbaeumer.vscode-eslint",
 				"ms-vscode.vscode-typescript-next",
 				"ms-playwright.playwright",
@@ -189,6 +191,9 @@
 				],
 				"php.suggest.basic": false,
 				"php.validate.enable": false,
+				"phpcs.enable": true,
+				"phpcs.standard": "./phpcs.xml",
+				"phpcs.executablePath": "./vendor/bin/phpcs",
 				"prettier.requireConfig": true,
 				"prettier.useEditorConfig": true,
 				"eslint.workingDirectories": [
@@ -206,6 +211,16 @@
 				},
 				"eslint.run": "onSave",
 				"eslint.nodeEnv": null,
+				"stylelint.enable": true,
+				"stylelint.validate": [
+					"css",
+					"scss",
+					"sass"
+				],
+				"stylelint.configFile": ".stylelintrc.json",
+				"stylelint.customSyntax": "",
+				"css.validate": false,
+				"scss.validate": false,
 				"path-intellisense.extensionOnImport": true,
 				"typescript.survey.enabled": false,
 				"npm.autoDetect": "off",
