@@ -15275,6 +15275,7 @@ __metadata:
   dependencies:
     "@playwright/test": "npm:^1.54.1"
     "@types/node": "npm:^22.16.5"
+    "@wordpress/eslint-plugin": "npm:^22.13.0"
     "@wordpress/scripts": "npm:^30.20.0"
     husky: "npm:^8.0.3"
     lint-staged: "npm:^13.3.0"
