@@ -1,0 +1,30 @@
+{
+	"name": "client-api-theme",
+	"version": "1.0.0",
+	"description": "WordPress block theme for API integration with Next.js client",
+	"keywords": [
+		"wordpress",
+		"theme",
+		"block-theme",
+		"api",
+		"nextjs"
+	],
+	"author": "Your Name",
+	"license": "GPL-2.0-or-later",
+	"main": "theme.json",
+	"engines": {
+		"node": ">=20.10.0",
+		"npm": ">=10.2.3"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^29.0.0"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update"
+	}
+}
