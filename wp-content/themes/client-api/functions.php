@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 
-add_action( 'rest_api_init', 'client_api_register_endpoints' );
+add_action( 'rest_api_init', 'client_api_register_endpoints', 10 );
 
 /**
  * Register custom REST API endpoints
@@ -53,6 +53,28 @@ function client_api_register_endpoints() {
 					'type'        => 'integer',
 					'default'     => 1,
 					'minimum'     => 1,
+				),
+				'slug'     => array(
+					'description' => 'Page slug to get specific page',
+					'type'        => 'string',
+					'required'    => false,
+				),
+			),
+		)
+	);
+
+	register_rest_route(
+		'client-api/v1',
+		'/page/(?P<slug>[a-zA-Z0-9-]+)',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'client_api_single_page_endpoint',
+			'permission_callback' => '__return_true',
+			'args'                => array(
+				'slug' => array(
+					'description' => 'Page slug',
+					'type'        => 'string',
+					'required'    => true,
 				),
 			),
 		)
@@ -103,6 +125,43 @@ function client_api_auth_endpoint( $_request ) {
 function client_api_auth_permissions_check( $_request ) {
 	unset( $_request );
 	return is_user_logged_in();
+}
+
+/**
+ * Single page endpoint callback
+ *
+ * @param WP_REST_Request $request Request object.
+ * @return WP_REST_Response|WP_Error Response object or error.
+ * @since 1.0.0
+ */
+function client_api_single_page_endpoint( $request ) {
+	$slug = $request->get_param( 'slug' );
+
+	$page = get_page_by_path( $slug );
+
+	if ( ! $page || 'publish' !== $page->post_status ) {
+		return new WP_Error(
+			'page_not_found',
+			'Page not found',
+			array( 'status' => 404 )
+		);
+	}
+
+	$page_data = array(
+		'id'             => $page->ID,
+		'title'          => get_the_title( $page->ID ),
+		'slug'           => $page->post_name,
+		'content'        => apply_filters( 'the_content', $page->post_content ),
+		'excerpt'        => get_the_excerpt( $page->ID ),
+		'date'           => get_the_date( 'c', $page->ID ),
+		'modified'       => get_the_modified_date( 'c', $page->ID ),
+		'status'         => $page->post_status,
+		'link'           => get_permalink( $page->ID ),
+		'featured_image' => get_the_post_thumbnail_url( $page->ID, 'full' ),
+		'meta'           => get_post_meta( $page->ID ),
+	);
+
+	return new WP_REST_Response( $page_data, 200 );
 }
 
 /**
@@ -167,24 +226,26 @@ function client_api_pages_endpoint( $request ) {
  *
  * @since 1.0.0
  */
-add_action(
-	'rest_api_init',
-	function () {
-		remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
-		add_filter( 'rest_pre_serve_request', 'client_api_add_cors_headers' );
-	}
-);
+add_action( 'init', 'client_api_add_cors_support' );
 
 /**
- * Add CORS headers callback
+ * Add CORS support for API requests
  *
- * @param mixed $value Response value.
- * @return mixed Response value.
  * @since 1.0.0
  */
-function client_api_add_cors_headers( $value ) {
-	status_header( 200 );
-	return $value;
+function client_api_add_cors_support() {
+	add_action( 'wp_loaded', 'client_api_handle_cors_preflight' );
+}
+
+/**
+ * Handle CORS preflight requests
+ *
+ * @since 1.0.0
+ */
+function client_api_handle_cors_preflight() {
+	if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'OPTIONS' === $_SERVER['REQUEST_METHOD'] ) {
+		wp_die( '', 'CORS Preflight', array( 'response' => 200 ) );
+	}
 }
 
 /**

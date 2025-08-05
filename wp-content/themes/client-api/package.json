@@ -17,7 +17,7 @@
 		"npm": ">=10.2.3"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^29.0.0"
+		"@wordpress/scripts": "^30.20.0"
 	},
 	"scripts": {
 		"build": "wp-scripts build",

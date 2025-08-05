@@ -40,26 +40,43 @@ const WORDPRESS_API_BASE =
 
 export async function fetchWithAuth(
 	endpoint: string,
-	options: RequestInit = {}
+	options: RequestInit = {},
+	credentials?: { username: string; password: string }
 ): Promise< Response > {
-	const url = `${ WORDPRESS_API_BASE }${ endpoint }`;
+	const url = `${ WORDPRESS_API_BASE }/index.php?rest_route=${ endpoint }`;
+
+	const headers: Record< string, string > = {
+		'Content-Type': 'application/json',
+		...( options.headers as Record< string, string > ),
+	};
+
+	if ( credentials ) {
+		const basicAuth = btoa(
+			`${ credentials.username }:${ credentials.password }`
+		);
+		headers.Authorization = `Basic ${ basicAuth }`;
+	}
 
 	const response = await fetch( url, {
 		...options,
-		headers: {
-			'Content-Type': 'application/json',
-			...options.headers,
-		},
+		headers,
 		credentials: 'include',
 	} );
 
 	return response;
 }
 
-export async function getCurrentUser(): Promise< WordPressUser > {
-	const response = await fetchWithAuth( '/wp-json/client-api/v1/auth' );
+export async function getCurrentUser( credentials?: {
+	username: string;
+	password: string;
+} ): Promise< WordPressUser > {
+	const response = await fetchWithAuth(
+		'/client-api/v1/auth',
+		{},
+		credentials
+	);
 
-	if (!response.ok) {
+	if ( ! response.ok ) {
 		const error: ApiError = {
 			status: response.status,
 			message:
@@ -78,7 +95,8 @@ export async function getPages(
 	params: {
 		per_page?: number;
 		page?: number;
-	} = {}
+	} = {},
+	credentials?: { username: string; password: string }
 ): Promise< PagesResponse > {
 	const searchParams = new URLSearchParams();
 
@@ -91,11 +109,11 @@ export async function getPages(
 	}
 
 	const queryString = searchParams.toString();
-	const endpoint = `/wp-json/client-api/v1/pages${
+	const endpoint = `/client-api/v1/pages${
 		queryString ? `?${ queryString }` : ''
 	}`;
 
-	const response = await fetchWithAuth( endpoint );
+	const response = await fetchWithAuth( endpoint, {}, credentials );
 
 	if ( ! response.ok ) {
 		const error: ApiError = {

@@ -94,8 +94,13 @@
 				"editor.guides.bracketPairs": "active",
 				"editor.codeActionsOnSave": {
 					"source.fixAll.eslint": "explicit",
+					"source.fixAll.stylelint": "explicit",
 					"source.organizeImports": "explicit",
 					"source.addMissingImports": "explicit"
+				},
+				"[css]": {
+					"editor.defaultFormatter": null,
+					"editor.formatOnSave": false
 				},
 				"intelephense.files.maxSize": 5000000,
 				"typescript.preferences.quoteStyle": "single",
