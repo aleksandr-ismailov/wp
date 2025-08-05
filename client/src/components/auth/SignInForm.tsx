@@ -9,12 +9,18 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import type { FormSettings } from '@/lib/wordpress-api';
 import { Eye, EyeOff } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export function SignInForm() {
+interface SignInFormProps {
+	formSettings?: FormSettings;
+}
+
+export function SignInForm( { formSettings }: SignInFormProps ) {
 	const [ username, setUsername ] = useState( '' );
 	const [ password, setPassword ] = useState( '' );
 	const [ showPassword, setShowPassword ] = useState( false );
@@ -46,12 +52,27 @@ export function SignInForm() {
 		}
 	};
 
+	const getFormWidth = () => {
+		switch ( formSettings?.formWidth ) {
+			case 'narrow':
+				return 'max-w-xs';
+			case 'wide':
+				return 'max-w-lg';
+			default:
+				return 'max-w-md';
+		}
+	};
+
 	return (
-		<Card className="w-full max-w-md mx-auto">
+		<Card
+			variant={ formSettings?.cardVariant }
+			className={ cn( 'w-full mx-auto', getFormWidth() ) }
+		>
 			<CardHeader>
-				<CardTitle>Sign In</CardTitle>
+				<CardTitle>{ formSettings?.formTitle || 'Sign In' }</CardTitle>
 				<CardDescription>
-					Enter your credentials to access your account
+					{ formSettings?.formDescription ||
+						'Enter your credentials to access your account' }
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
@@ -96,10 +117,14 @@ export function SignInForm() {
 					) }
 					<Button
 						type="submit"
+						variant={ formSettings?.buttonVariant }
+						size={ formSettings?.buttonSize }
 						className="w-full"
 						disabled={ isLoading }
 					>
-						{ isLoading ? 'Signing in...' : 'Sign In' }
+						{ isLoading
+							? 'Signing in...'
+							: formSettings?.buttonText || 'Sign In' }
 					</Button>
 				</form>
 			</CardContent>

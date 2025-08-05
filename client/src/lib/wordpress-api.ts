@@ -3,6 +3,22 @@ export interface ApiError {
 	message: string;
 }
 
+export interface FormSettings {
+	formTitle?: string;
+	formDescription?: string;
+	buttonText?: string;
+	buttonVariant?:
+		| 'default'
+		| 'destructive'
+		| 'outline'
+		| 'secondary'
+		| 'ghost'
+		| 'link';
+	buttonSize?: 'default' | 'sm' | 'lg' | 'icon';
+	cardVariant?: 'default' | 'minimal' | 'bordered';
+	formWidth?: 'default' | 'narrow' | 'wide';
+}
+
 export interface WordPressUser {
 	id: number;
 	username: string;
@@ -25,6 +41,7 @@ export interface WordPressPage {
 	link: string;
 	featured_image: string | null;
 	meta: Record< string, unknown >;
+	formSettings?: FormSettings;
 }
 
 export interface PagesResponse {

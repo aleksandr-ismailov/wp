@@ -101,4 +101,10 @@ changes.json
 _temp/
 _app/build
 
+# WordPress update temp files
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/updraft/
+wp-content/cache/
+
 *.code-workspace

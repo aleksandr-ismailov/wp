@@ -52,7 +52,9 @@ const SignInPage = async () => {
 								: ''
 						}` }
 					>
-						<SignInForm />
+						<SignInForm
+							formSettings={ signInContent?.formSettings }
+						/>
 					</div>
 				</div>
 			</div>
