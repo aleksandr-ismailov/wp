@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "client-api/sign-in-page",
+	"version": "0.1.0",
+	"title": "Sign In Page",
+	"category": "widgets",
+	"textdomain": "client-api",
+	"attributes": {
+		"formTitle": {
+			"type": "string",
+			"default": "Sign In"
+		},
+		"formDescription": {
+			"type": "string",
+			"default": "Enter your credentials to access your account"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Sign In"
+		}
+	},
+	"supports": {
+		"align": true
+	},
+	"editorScript": "file:./index.tsx",
+	"editorStyle": "file:./index.css",
+	"style": "file:./index.css"
+}

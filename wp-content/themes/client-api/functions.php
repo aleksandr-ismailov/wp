@@ -9,8 +9,17 @@
  * @since 1.0.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 require_once get_template_directory() . '/inc/theme-setup.php';
 require_once get_template_directory() . '/inc/api-endpoints.php';
 require_once get_template_directory() . '/inc/cors.php';
-require_once get_template_directory() . '/inc/meta-boxes.php';
-require_once get_template_directory() . '/page-content/page-content.php';
+
+/**
+ * Load sign-in-page block plugin
+ *
+ * @since 1.0.0
+ */
+require_once get_template_directory() . '/sign-in-page/sign-in-page.php';

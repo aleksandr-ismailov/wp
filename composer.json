@@ -6,10 +6,11 @@
 		"php": ">=8.2"
 	},
 	"require-dev": {
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
-		"squizlabs/php_codesniffer": "^3.6",
-		"wp-coding-standards/wpcs": "^3.0",
-		"php-stubs/wordpress-stubs": "^6.8"
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+		"squizlabs/php_codesniffer": "^3.13",
+		"wp-coding-standards/wpcs": "^3.2",
+		"php-stubs/wordpress-stubs": "^6.8",
+		"phpstan/phpstan": "^2.1"
 	},
 	"scripts": {
 		"lint": "XDEBUG_MODE=off ./vendor/bin/phpcs --standard=phpcs.xml",

@@ -1,45 +1,27 @@
 {
 	"compilerOptions": {
-		"target": "es2020",
-		"lib": [
-			"dom",
-			"es2020"
-		],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noFallthroughCasesInSwitch": true,
-		"module": "esnext",
+		"target": "ES2020",
+		"lib": ["DOM", "DOM.Iterable", "ES2020"],
+		"module": "ESNext",
 		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
 		"jsx": "react-jsx",
-		"declaration": false,
-		"declarationMap": false,
-		"sourceMap": true,
-		"removeComments": false,
-		"noUnusedLocals": false,
-		"noUnusedParameters": false,
-		"exactOptionalPropertyTypes": false,
-		"noImplicitReturns": false,
-		"noImplicitOverride": false,
-		"noPropertyAccessFromIndexSignature": false,
-		"noUncheckedIndexedAccess": false
+		"strict": false,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"noEmit": true
 	},
 	"include": [
-		"wp-content/**/src/**/*",
-		"*.ts",
-		"*.tsx",
-		"*.js",
-		"*.jsx"
+		"wp-content/**/*.ts",
+		"wp-content/**/*.tsx"
 	],
 	"exclude": [
 		"node_modules",
-		"wp-content/**/build/**/*",
-		"wp-content/**/node_modules/**/*"
+		"**/node_modules",
+		"**/build",
+		"**/dist",
+		".next"
 	]
 }

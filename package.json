@@ -1,7 +1,7 @@
 {
-	"name": "wordpress-block-development-learning",
+	"name": "webapp",
 	"version": "1.0.0",
-	"description": "WordPress Block Development Learning Environment",
+	"description": "WordPress + Next.js Web Application",
 	"main": "index.js",
 	"scripts": {
 		"build": "yarn workspaces foreach --all run build",
@@ -15,6 +15,7 @@
 		"test:e2e": "wp-scripts test-playwright",
 		"test:e2e:debug": "wp-scripts test-playwright --debug",
 		"lint": "yarn workspaces foreach --all run lint:css && yarn workspaces foreach --all run lint:js && yarn run lint:php",
+		"lint:fix": "yarn workspaces foreach --all run lint:js --fix && yarn run format:php",
 		"lint:php": "composer lint",
 		"format:php": "composer fix",
 		"format:css": "yarn workspaces foreach --all run format:css",
@@ -38,9 +39,9 @@
 	},
 	"keywords": [
 		"wordpress",
-		"gutenberg",
-		"blocks",
-		"learning"
+		"nextjs",
+		"webapp",
+		"api"
 	],
 	"author": "",
 	"license": "ISC",
@@ -49,6 +50,8 @@
 		"@playwright/test": "^1.54.1",
 		"@types/babel__core": "^7",
 		"@types/node": "^22.16.5",
+		"@typescript-eslint/eslint-plugin": "^8.39.0",
+		"@typescript-eslint/parser": "^8.39.0",
 		"@wordpress/eslint-plugin": "^22.13.0",
 		"@wordpress/prettier-config": "^4.27.0",
 		"@wordpress/scripts": "^30.20.0",
@@ -64,7 +67,7 @@
 		"stylelint": "^16.23.0",
 		"stylelint-config-tailwindcss": "^1.0.0",
 		"stylelint-scss": "^6.12.1",
-		"typescript": "^5.8.3"
+		"typescript": "~5.3.3"
 	},
 	"packageManager": "yarn@4.5.3",
 	"workspaces": [

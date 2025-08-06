@@ -17,6 +17,9 @@
 		"npm": ">=10.2.3"
 	},
 	"devDependencies": {
+		"@types/react": "^19.1.9",
+		"@types/react-dom": "^19.1.7",
+		"@wordpress/eslint-plugin": "^22.14.0",
 		"@wordpress/scripts": "^30.20.0"
 	},
 	"scripts": {

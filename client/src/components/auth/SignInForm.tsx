@@ -9,7 +9,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+
 import type { FormSettings } from '@/lib/wordpress-api';
 import { Eye, EyeOff } from 'lucide-react';
 import { signIn } from 'next-auth/react';
@@ -20,80 +20,66 @@ interface SignInFormProps {
 	formSettings?: FormSettings;
 }
 
-export function SignInForm( { formSettings }: SignInFormProps ) {
-	const [ username, setUsername ] = useState( '' );
-	const [ password, setPassword ] = useState( '' );
-	const [ showPassword, setShowPassword ] = useState( false );
-	const [ isLoading, setIsLoading ] = useState( false );
-	const [ error, setError ] = useState( '' );
+export function SignInForm({ formSettings }: SignInFormProps) {
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState('');
 	const router = useRouter();
 
-	const handleSubmit = async ( e: React.FormEvent ) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setIsLoading( true );
-		setError( '' );
+		setIsLoading(true);
+		setError('');
 
 		try {
-			const result = await signIn( 'credentials', {
+			const result = await signIn('credentials', {
 				username,
 				password,
 				redirect: false,
-			} );
+			});
 
-			if ( result?.error ) {
-				setError( 'Invalid credentials' );
-			} else if ( result?.ok ) {
-				router.push( '/home' );
+			if (result?.error) {
+				setError('Invalid credentials');
+			} else if (result?.ok) {
+				router.push('/home');
 			}
 		} catch {
-			setError( 'Something went wrong' );
+			setError('Something went wrong');
 		} finally {
-			setIsLoading( false );
-		}
-	};
-
-	const getFormWidth = () => {
-		switch ( formSettings?.formWidth ) {
-			case 'narrow':
-				return 'max-w-xs';
-			case 'wide':
-				return 'max-w-lg';
-			default:
-				return 'max-w-md';
+			setIsLoading(false);
 		}
 	};
 
 	return (
-		<Card
-			variant={ formSettings?.cardVariant }
-			className={ cn( 'w-full mx-auto', getFormWidth() ) }
-		>
+		<Card className="w-full mx-auto max-w-md">
 			<CardHeader>
-				<CardTitle>{ formSettings?.formTitle || 'Sign In' }</CardTitle>
+				<CardTitle>{formSettings?.formTitle || 'Sign In'}</CardTitle>
 				<CardDescription>
-					{ formSettings?.formDescription ||
-						'Enter your credentials to access your account' }
+					{formSettings?.formDescription ||
+						'Enter your credentials to access your account'}
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<form onSubmit={ handleSubmit } className="space-y-4">
+				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
 						<Input
 							type="text"
 							placeholder="Username"
-							value={ username }
-							onChange={ ( e ) => setUsername( e.target.value ) }
-							disabled={ isLoading }
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+							disabled={isLoading}
 							required
 						/>
 					</div>
 					<div className="relative">
 						<Input
-							type={ showPassword ? 'text' : 'password' }
+							type={showPassword ? 'text' : 'password'}
 							placeholder="Password"
-							value={ password }
-							onChange={ ( e ) => setPassword( e.target.value ) }
-							disabled={ isLoading }
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							disabled={isLoading}
 							required
 						/>
 						<Button
@@ -101,30 +87,28 @@ export function SignInForm( { formSettings }: SignInFormProps ) {
 							variant="ghost"
 							size="sm"
 							className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1"
-							onClick={ () => setShowPassword( ! showPassword ) }
+							onClick={() => setShowPassword(!showPassword)}
 						>
-							{ showPassword ? (
+							{showPassword ? (
 								<EyeOff className="h-4 w-4" />
 							) : (
 								<Eye className="h-4 w-4" />
-							) }
+							)}
 						</Button>
 					</div>
-					{ error && (
-						<div className="text-sm text-destructive">
-							{ error }
+					{error && (
+						<div className="text-ds-medium text-destructive">
+							{error}
 						</div>
-					) }
+					)}
 					<Button
 						type="submit"
-						variant={ formSettings?.buttonVariant }
-						size={ formSettings?.buttonSize }
 						className="w-full"
-						disabled={ isLoading }
+						disabled={isLoading}
 					>
-						{ isLoading
+						{isLoading
 							? 'Signing in...'
-							: formSettings?.buttonText || 'Sign In' }
+							: formSettings?.buttonText || 'Sign In'}
 					</Button>
 				</form>
 			</CardContent>

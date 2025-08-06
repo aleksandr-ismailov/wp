@@ -12,4 +12,5 @@
 	<exclude-pattern>wp-content/themes/twenty*</exclude-pattern>
 	<exclude-pattern>wp-content/plugins/akismet</exclude-pattern>
 	<exclude-pattern>wp-content/plugins/hello.php</exclude-pattern>
+
 </ruleset>

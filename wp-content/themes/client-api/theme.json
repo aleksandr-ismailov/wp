@@ -3,41 +3,104 @@
 	"version": 3,
 	"title": "Client API Theme",
 	"settings": {
-		"appearanceTools": true,
-		"layout": {
-			"contentSize": "1200px",
-			"wideSize": "1400px"
+		"blocks": {
+			"allowedBlocks": [
+				"core/heading",
+				"core/paragraph",
+				"core/list",
+				"core/list-item",
+				"core/image",
+				"core/columns",
+				"core/column"
+			]
 		},
 		"color": {
 			"palette": [
 				{
-					"slug": "primary",
-					"color": "#2563eb",
-					"name": "Primary"
-				},
-				{
-					"slug": "secondary",
-					"color": "#64748b",
-					"name": "Secondary"
-				},
-				{
 					"slug": "background",
-					"color": "#ffffff",
+					"color": "oklch(1 0 0)",
 					"name": "Background"
 				},
 				{
 					"slug": "foreground",
-					"color": "#1e293b",
+					"color": "oklch(0.145 0 0)",
 					"name": "Foreground"
+				},
+				{
+					"slug": "primary",
+					"color": "oklch(0.205 0 0)",
+					"name": "Primary"
+				},
+				{
+					"slug": "primary-foreground",
+					"color": "oklch(0.985 0 0)",
+					"name": "Primary Foreground"
+				},
+				{
+					"slug": "secondary",
+					"color": "oklch(0.97 0 0)",
+					"name": "Secondary"
+				},
+				{
+					"slug": "secondary-foreground",
+					"color": "oklch(0.205 0 0)",
+					"name": "Secondary Foreground"
+				},
+				{
+					"slug": "muted",
+					"color": "oklch(0.97 0 0)",
+					"name": "Muted"
+				},
+				{
+					"slug": "muted-foreground",
+					"color": "oklch(0.556 0 0)",
+					"name": "Muted Foreground"
+				},
+				{
+					"slug": "accent",
+					"color": "oklch(0.97 0 0)",
+					"name": "Accent"
+				},
+				{
+					"slug": "accent-foreground",
+					"color": "oklch(0.205 0 0)",
+					"name": "Accent Foreground"
+				},
+				{
+					"slug": "destructive",
+					"color": "oklch(0.577 0.245 27.325)",
+					"name": "Destructive"
+				},
+				{
+					"slug": "destructive-foreground",
+					"color": "oklch(0.985 0 0)",
+					"name": "Destructive Foreground"
+				},
+				{
+					"slug": "border",
+					"color": "oklch(0.922 0 0)",
+					"name": "Border"
+				},
+				{
+					"slug": "ring",
+					"color": "oklch(0.708 0 0)",
+					"name": "Ring"
 				}
-			]
+			],
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"custom": false,
+			"customGradient": false,
+			"background": false,
+			"text": false,
+			"link": false
 		},
 		"typography": {
 			"fontFamilies": [
 				{
-					"slug": "system",
-					"fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-					"name": "System Font"
+					"fontFamily": "Geist, ui-sans-serif, system-ui, sans-serif",
+					"name": "Geist Sans",
+					"slug": "geist-sans"
 				}
 			],
 			"fontSizes": [
@@ -53,26 +116,93 @@
 				},
 				{
 					"slug": "large",
-					"size": "20px",
+					"size": "18px",
 					"name": "Large"
 				},
 				{
 					"slug": "x-large",
 					"size": "24px",
 					"name": "Extra Large"
+				},
+				{
+					"slug": "h6",
+					"size": "14px",
+					"name": "Heading 6"
+				},
+				{
+					"slug": "h5",
+					"size": "16px",
+					"name": "Heading 5"
+				},
+				{
+					"slug": "h4",
+					"size": "18px",
+					"name": "Heading 4"
+				},
+				{
+					"slug": "h3",
+					"size": "20px",
+					"name": "Heading 3"
+				},
+				{
+					"slug": "h2",
+					"size": "24px",
+					"name": "Heading 2"
+				},
+				{
+					"slug": "h1",
+					"size": "32px",
+					"name": "Heading 1"
 				}
-			]
+			],
+			"fontWeight": [
+				{
+					"slug": "normal",
+					"name": "Normal",
+					"value": "400"
+				},
+				{
+					"slug": "medium",
+					"name": "Medium",
+					"value": "500"
+				},
+				{
+					"slug": "semibold",
+					"name": "Semi Bold",
+					"value": "600"
+				},
+				{
+					"slug": "bold",
+					"name": "Bold",
+					"value": "700"
+				}
+			],
+			"defaultFontSizes": false,
+			"customFontSize": false,
+			"lineHeight": false,
+			"textTransform": false,
+			"letterSpacing": false,
+			"fontStyle": false
+		},
+		"spacing": {
+			"margin": false,
+			"padding": false,
+			"customSpacingSize": false
+		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"layout": {
+			"contentSize": false,
+			"wideSize": false
 		}
 	},
 	"styles": {
-		"color": {
-			"background": "var(--wp--preset--color--background)",
-			"text": "var(--wp--preset--color--foreground)"
-		},
 		"typography": {
-			"fontFamily": "var(--wp--preset--font-family--system)",
-			"fontSize": "var(--wp--preset--font-size--medium)",
-			"lineHeight": "1.6"
+			"fontFamily": "var(--wp--preset--font-family--geist-sans)"
 		}
 	}
 }

@@ -14,13 +14,13 @@ import { redirect } from 'next/navigation';
 import { SignOutButton } from './sign-out-button';
 
 export default async function HomePage() {
-	const session = ( await getServerSession( authOptions ) ) as Session | null;
+	const session = (await getServerSession(authOptions)) as Session | null;
 
-	if ( ! session ) {
-		redirect( '/sign-in' );
+	if (!session) {
+		redirect('/sign-in');
 	}
 
-	if ( ! session.user?.username || ! session.user?.password ) {
+	if (!session.user?.username || !session.user?.password) {
 		return (
 			<div className="min-h-screen flex items-center justify-center">
 				<Card>
@@ -37,16 +37,15 @@ export default async function HomePage() {
 	let error = '';
 
 	try {
-		const [ pagesData, userData ] = await Promise.all( [
-			fetchPages( { perPage: 5 } ),
+		const [pagesData, userData] = await Promise.all([
+			fetchPages({ perPage: 5 }),
 			fetchCurrentUser(),
-		] );
+		]);
 
 		pages = pagesData.pages;
 		user = userData;
-	} catch ( err ) {
+	} catch {
 		error = 'Failed to load data';
-		console.error( err );
 	}
 
 	return (
@@ -55,26 +54,26 @@ export default async function HomePage() {
 				<div className="flex justify-between items-center">
 					<div>
 						<h1 className="text-3xl font-bold">
-							Welcome, { session.user.name }
+							Welcome, {session.user.name}
 						</h1>
-						{ user && (
+						{user && (
 							<p className="text-muted-foreground">
-								{ user.email } • { user.roles.join( ', ' ) }
+								{user.email} • {user.roles.join(', ')}
 							</p>
-						) }
+						)}
 					</div>
 					<SignOutButton />
 				</div>
 
-				{ error && (
+				{error && (
 					<Card>
 						<CardContent className="p-6">
-							<div className="text-destructive">{ error }</div>
+							<div className="text-destructive">{error}</div>
 						</CardContent>
 					</Card>
-				) }
+				)}
 
-				{ ! error && (
+				{!error && (
 					<Card>
 						<CardHeader>
 							<CardTitle>WordPress Pages</CardTitle>
@@ -83,37 +82,37 @@ export default async function HomePage() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							{ pages.length === 0 ? (
+							{pages.length === 0 ? (
 								<p className="text-muted-foreground">
 									No pages found.
 								</p>
 							) : (
 								<div className="space-y-4">
-									{ pages.map( ( page ) => (
+									{pages.map((page) => (
 										<div
-											key={ page.id }
+											key={page.id}
 											className="border rounded-lg p-4"
 										>
 											<h3 className="font-semibold">
-												{ page.title }
+												{page.title}
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												{ page.excerpt }
+												{page.excerpt}
 											</p>
 											<div className="flex gap-2 mt-2 text-xs text-muted-foreground">
-												<span>ID: { page.id }</span>
-												<span>Slug: { page.slug }</span>
+												<span>ID: {page.id}</span>
+												<span>Slug: {page.slug}</span>
 												<span>
-													Status: { page.status }
+													Status: {page.status}
 												</span>
 											</div>
 										</div>
-									) ) }
+									))}
 								</div>
-							) }
+							)}
 						</CardContent>
 					</Card>
-				) }
+				)}
 			</div>
 		</div>
 	);
