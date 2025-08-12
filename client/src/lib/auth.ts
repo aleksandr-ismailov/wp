@@ -4,14 +4,14 @@ import type { WordPressUser } from './wordpress-api';
 
 export const authOptions: NextAuthOptions = {
 	providers: [
-		CredentialsProvider( {
+		CredentialsProvider({
 			name: 'WordPress',
 			credentials: {
 				username: { label: 'Username', type: 'text' },
 				password: { label: 'Password', type: 'password' },
 			},
-			async authorize( credentials ) {
-				if ( ! credentials?.username || ! credentials?.password ) {
+			async authorize(credentials) {
+				if (!credentials?.username || !credentials?.password) {
 					return null;
 				}
 
@@ -21,27 +21,27 @@ export const authOptions: NextAuthOptions = {
 						'http://localhost:8888';
 
 					const response = await fetch(
-						`${ WORDPRESS_URL }/index.php?rest_route=/wp/v2/users/me`,
+						`${WORDPRESS_URL}/index.php?rest_route=/wp/v2/users/me`,
 						{
 							method: 'GET',
 							headers: {
-								Authorization: `Basic ${ Buffer.from(
-									`${ credentials.username }:${ credentials.password }`
-								).toString( 'base64' ) }`,
+								Authorization: `Basic ${Buffer.from(
+									`${credentials.username}:${credentials.password}`
+								).toString('base64')}`,
 								'Content-Type': 'application/json',
 							},
 						}
 					);
 
-					if ( ! response.ok ) {
+					if (!response.ok) {
 						return null;
 					}
 
-					const wpUser = ( await response.json() ) as WordPressUser;
+					const wpUser = (await response.json()) as WordPressUser;
 
 					return {
 						id: wpUser.id.toString(),
-						name: wpUser.display_name,
+						name: wpUser.name,
 						email: wpUser.email,
 						image: null,
 						username: credentials.username,
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
 					return null;
 				}
 			},
-		} ),
+		}),
 	],
 	session: {
 		strategy: 'jwt',
@@ -60,19 +60,22 @@ export const authOptions: NextAuthOptions = {
 		signIn: '/sign-in',
 	},
 	callbacks: {
-		async jwt( { token, user } ) {
-			if ( user ) {
+		async jwt({ token, user }) {
+			if (user) {
 				token.id = user.id;
 				token.username = user.username;
 				token.password = user.password;
 			}
 			return token;
 		},
-		async session( { session, token } ) {
-			if ( token && session.user ) {
+		async session({ session, token }) {
+			if (token && session.user) {
 				session.user.id = token.id as string;
 				session.user.username = token.username as string;
 				session.user.password = token.password as string;
+			}
+			if (token.error) {
+				session.error = token.error;
 			}
 			return session;
 		},

@@ -9,11 +9,10 @@ interface PagesResponse {
 	perPage: number;
 }
 
-export const fetchCurrentUser = async (): Promise< WordPressUser > => {
-	const data = await fetchData< WordPressUser >(
-		'/client-api/v1/auth',
-		'GET'
-	);
+export const fetchCurrentUser = async (): Promise<WordPressUser> => {
+	const data = await fetchData<WordPressUser>('/wp/v2/users/me', 'GET', {
+		context: 'edit',
+	});
 	return data;
 };
 
@@ -22,21 +21,37 @@ export const fetchPages = async (
 		perPage?: number;
 		page?: number;
 	} = {}
-): Promise< PagesResponse > => {
-	const data = await fetchData< PagesResponse >(
-		'/client-api/v1/pages',
+): Promise<PagesResponse> => {
+	const queryParams = {
+		per_page: params.perPage || 5,
+		page: params.page || 1,
+		orderby: 'title',
+		order: 'asc',
+	};
+
+	const pages = await fetchData<WordPressPage[]>(
+		'/wp/v2/pages',
 		'GET',
-		params
+		queryParams
 	);
-	return data;
+
+	return {
+		pages: pages,
+		total: pages.length,
+		totalPages: 1,
+		currentPage: queryParams.page,
+		perPage: queryParams.per_page,
+	};
 };
 
-export const fetchPageBySlug = async (
-	slug: string
-): Promise< WordPressPage > => {
-	const data = await fetchData< WordPressPage >(
-		`/client-api/v1/page/${ slug }`,
-		'GET'
-	);
-	return data;
+export const fetchPageBySlug = async (slug: string): Promise<WordPressPage> => {
+	const pages = await fetchData<WordPressPage[]>('/wp/v2/pages', 'GET', {
+		slug,
+	});
+
+	if (pages.length === 0) {
+		throw new Error(`Page with slug "${slug}" not found`);
+	}
+
+	return pages[0];
 };

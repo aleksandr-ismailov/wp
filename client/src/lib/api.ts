@@ -5,109 +5,120 @@ import { isNoContent, parseApiError } from './api-lib';
 import { authOptions } from './auth';
 import { camelizeKeys, decamelizeKeys, isNotNil, isObject } from './utils';
 
-const WORDPRESS_API_BASE = process.env.WORDPRESS_URL || 'http://localhost:8888';
+const WORDPRESS_API_BASE =
+	process.env.NEXT_PUBLIC_WORDPRESS_URL || 'http://localhost:8888';
 
-export const fetchData = async < TResponse extends object >(
+export const fetchData = async <TResponse>(
 	path: string,
 	method: HttpMethod,
-	body?: Record< string, unknown >,
-	headers?: Record< string, string >
-): Promise< TResponse > => {
-	const session = ( await getServerSession( authOptions ) ) as Session | null;
-	const hasBody = isNotNil( body ) && method !== 'GET';
+	body?: Record<string, unknown>,
+	headers?: Record<string, string>
+): Promise<TResponse> => {
+	const session = (await getServerSession(authOptions)) as Session | null;
+	const hasBody = isNotNil(body) && method !== 'GET';
 
-	if ( ! session?.user?.username || ! session?.user?.password ) {
-		throw new Error( 'No authentication credentials available' );
+	if (!session?.user?.username || !session?.user?.password) {
+		throw new Error('No authentication credentials available');
 	}
 
-	const basicAuth = btoa(
-		`${ session.user.username }:${ session.user.password }`
-	);
+	const basicAuth = btoa(`${session.user.username}:${session.user.password}`);
 
 	const searchParams = new URLSearchParams();
-	searchParams.set( 'rest_route', path );
+	searchParams.set('rest_route', path);
 
-	if ( method === 'GET' && body ) {
-		Object.entries( body ).forEach( ( [ key, value ] ) => {
-			if ( value !== undefined && value !== null ) {
-				searchParams.set( key, String( value ) );
+	if (method === 'GET' && body) {
+		Object.entries(body).forEach(([key, value]) => {
+			if (value !== undefined && value !== null) {
+				searchParams.set(key, String(value));
 			}
-		} );
+		});
 	}
 
-	const url = `${ WORDPRESS_API_BASE }/index.php?${ searchParams.toString() }`;
+	const url = `${WORDPRESS_API_BASE}/index.php?${searchParams.toString()}`;
 
-	const response = await fetch( url, {
+	const response = await fetch(url, {
 		method,
 		credentials: 'include',
-		body: hasBody ? JSON.stringify( decamelizeKeys( body ) ) : undefined,
+		body: hasBody ? JSON.stringify(decamelizeKeys(body)) : undefined,
 		headers: {
-			...( hasBody && { 'Content-Type': 'application/json' } ),
-			Authorization: `Basic ${ basicAuth }`,
-			...( headers ?? {} ),
+			...(hasBody && { 'Content-Type': 'application/json' }),
+			Authorization: `Basic ${basicAuth}`,
+			...(headers ?? {}),
 		},
-	} );
+	});
 
-	if ( ! response.ok ) {
+	if (!response.ok) {
 		const data: unknown = await response.json();
-		throw parseApiError( data );
+		throw parseApiError(data);
 	}
 
-	if ( isNoContent( response.status ) ) {
+	if (isNoContent(response.status)) {
 		return {} as TResponse;
 	}
 
 	const data: unknown = await response.json();
 
-	if ( ! isObject( data ) ) {
-		throw new Error( 'API response is not an object' );
+	if (Array.isArray(data)) {
+		return data.map((item) =>
+			isObject(item) ? camelizeKeys(item) : item
+		) as TResponse;
 	}
 
-	return camelizeKeys( data ) as TResponse;
+	if (!isObject(data)) {
+		throw new Error('API response is not an object or array');
+	}
+
+	return camelizeKeys(data) as TResponse;
 };
 
-export const fetchPublicData = async < TResponse extends object >(
+export const fetchPublicData = async <TResponse>(
 	path: string,
 	method: HttpMethod = 'GET',
-	body?: Record< string, unknown >
-): Promise< TResponse > => {
-	const hasBody = isNotNil( body ) && method !== 'GET';
+	body?: Record<string, unknown>
+): Promise<TResponse> => {
+	const hasBody = isNotNil(body) && method !== 'GET';
 
 	const searchParams = new URLSearchParams();
-	searchParams.set( 'rest_route', path );
+	searchParams.set('rest_route', path);
 
-	if ( method === 'GET' && body ) {
-		Object.entries( body ).forEach( ( [ key, value ] ) => {
-			if ( value !== undefined && value !== null ) {
-				searchParams.set( key, String( value ) );
+	if (method === 'GET' && body) {
+		Object.entries(body).forEach(([key, value]) => {
+			if (value !== undefined && value !== null) {
+				searchParams.set(key, String(value));
 			}
-		} );
+		});
 	}
 
-	const url = `${ WORDPRESS_API_BASE }/index.php?${ searchParams.toString() }`;
+	const url = `${WORDPRESS_API_BASE}/index.php?${searchParams.toString()}`;
 
-	const response = await fetch( url, {
+	const response = await fetch(url, {
 		method,
-		body: hasBody ? JSON.stringify( decamelizeKeys( body ) ) : undefined,
+		body: hasBody ? JSON.stringify(decamelizeKeys(body)) : undefined,
 		headers: {
-			...( hasBody && { 'Content-Type': 'application/json' } ),
+			...(hasBody && { 'Content-Type': 'application/json' }),
 		},
-	} );
+	});
 
-	if ( ! response.ok ) {
+	if (!response.ok) {
 		const data: unknown = await response.json();
-		throw parseApiError( data );
+		throw parseApiError(data);
 	}
 
-	if ( isNoContent( response.status ) ) {
+	if (isNoContent(response.status)) {
 		return {} as TResponse;
 	}
 
 	const data: unknown = await response.json();
 
-	if ( ! isObject( data ) ) {
-		throw new Error( 'API response is not an object' );
+	if (Array.isArray(data)) {
+		return data.map((item) =>
+			isObject(item) ? camelizeKeys(item) : item
+		) as TResponse;
 	}
 
-	return camelizeKeys( data ) as TResponse;
+	if (!isObject(data)) {
+		throw new Error('API response is not an object or array');
+	}
+
+	return camelizeKeys(data) as TResponse;
 };

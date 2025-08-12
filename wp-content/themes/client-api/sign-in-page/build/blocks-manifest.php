@@ -8,15 +8,10 @@ return array(
 		'version' => '0.1.0',
 		'title' => 'Sign In Page',
 		'category' => 'widgets',
-		'textdomain' => 'client-api',
 		'attributes' => array(
 			'formTitle' => array(
 				'type' => 'string',
 				'default' => 'Sign In'
-			),
-			'formDescription' => array(
-				'type' => 'string',
-				'default' => 'Enter your credentials to access your account'
 			),
 			'buttonText' => array(
 				'type' => 'string',
@@ -26,8 +21,6 @@ return array(
 		'supports' => array(
 			'align' => true
 		),
-		'editorScript' => 'file:./index.js',
-		'editorStyle' => 'file:./index.css',
-		'style' => 'file:./index.css'
+		'editorScript' => 'file:./index.js'
 	)
 );

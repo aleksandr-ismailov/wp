@@ -3,19 +3,19 @@
 		"browser": true,
 		"node": true,
 		"es6": true,
-		"jest/globals": true,
+		"jest/globals": true
 	},
 	"plugins": ["jest"],
 	"extends": [
 		"plugin:@wordpress/eslint-plugin/esnext",
 		"plugin:@wordpress/eslint-plugin/i18n",
-		"plugin:@wordpress/eslint-plugin/react",
+		"plugin:@wordpress/eslint-plugin/react"
 	],
 
 	"globals": {
 		"wp": "readonly",
 		"jQuery": "readonly",
-		"HTMLElement": true,
+		"HTMLElement": true
 	},
 
 	"ignorePatterns": [
@@ -47,24 +47,28 @@
 		// Generated files
 		"*.d.ts",
 		"tsconfig.tsbuildinfo",
+
+		// Configuration files
+		".eslintrc"
 	],
 	"rules": {
 		"@wordpress/i18n-text-domain": [
 			"error",
 			{
-				"allowedTextDomain": ["page-content", "client-api"],
-			},
+				"allowedTextDomain": ["page-content", "client-api"]
+			}
 		],
 		"no-console": "off",
 		"jsdoc/no-undefined-types": "off",
 		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+		"comma-dangle": ["error", "always-multiline"]
 	},
 	"overrides": [
 		{
 			"files": ["playwright.config.js"],
 			"rules": {
-				"import/no-unresolved": "off",
-			},
-		},
-	],
+				"import/no-unresolved": "off"
+			}
+		}
+	]
 }

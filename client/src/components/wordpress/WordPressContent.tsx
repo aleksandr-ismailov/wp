@@ -1,30 +1,29 @@
+import { cn } from '@/lib/utils';
+import type { WordPressPage } from '@/lib/wordpress-api';
+import { RawHTML } from '@wordpress/element';
+
 interface WordPressContentProps {
-	page: {
-		title?: string;
-		content: string;
-		blockStyles?: string;
-	};
+	page: Pick<WordPressPage, 'title' | 'content'>;
 	className?: string;
-	showTitle?: boolean;
 }
 
-const WordPressContent: React.FC<WordPressContentProps> = ({
-	page,
-	className,
-	showTitle = true,
-}) => {
+const WordPressContent = (props: WordPressContentProps) => {
+	const { page, className } = props;
+
+	if (!page.content?.trim()) {
+		return null;
+	}
+
 	return (
-		<div className={`wp-content ${className || ''}`}>
-			{page.blockStyles && (
-				<style dangerouslySetInnerHTML={{ __html: page.blockStyles }} />
+		<div className={cn('wp-content', className)}>
+			{page.title && (
+				<h1 className="font-bold mb-6" style={{ fontSize: '32px' }}>
+					{page.title}
+				</h1>
 			)}
-			{showTitle && page.title && (
-				<h1 className="text-3xl font-bold mb-6">{page.title}</h1>
-			)}
-			<div
-				className="wp-block-content max-w-none"
-				dangerouslySetInnerHTML={{ __html: page.content }}
-			/>
+			<div className="wp-block-content max-w-none">
+				<RawHTML>{page.content}</RawHTML>
+			</div>
 		</div>
 	);
 };

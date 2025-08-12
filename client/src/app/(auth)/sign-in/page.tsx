@@ -17,29 +17,15 @@ const SignInPage = async () => {
 	const signInContent = await getSignInContent();
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-background p-4">
-			<div className="w-full max-w-4xl mx-auto">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-					{signInContent && (
-						<div className="order-2 lg:order-1">
-							<WordPressContent
-								page={signInContent}
-								className="text-center lg:text-left"
-							/>
-						</div>
-					)}
-					<div
-						className={`order-1 lg:order-2 ${
-							!signInContent
-								? 'lg:col-span-2 flex justify-center'
-								: ''
-						}`}
-					>
-						<SignInForm
-							formSettings={signInContent?.formSettings}
-						/>
-					</div>
-				</div>
+		<div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 px-4">
+			{signInContent && (
+				<WordPressContent
+					page={signInContent}
+					className="w-1/2 max-w-[440px] p-ds-16 text-center lg:text-left"
+				/>
+			)}
+			<div className="w-1/2 max-w-[440px] p-ds-16 flex-x justify-start">
+				<SignInForm formSettings={signInContent?.formSettings} />
 			</div>
 		</div>
 	);

@@ -1,10 +1,10 @@
 // Import the default config file and expose it in the project root.
 // Configure arrays to display each element on a new line
 const config = {
-	...require( '@wordpress/prettier-config' ),
+	...require('@wordpress/prettier-config'),
 	overrides: [
 		{
-			files: [ '*.json' ],
+			files: ['*.json'],
 			options: {
 				parser: 'json',
 				printWidth: 1,
@@ -12,7 +12,7 @@ const config = {
 		},
 		// Configure SCSS files to use double quotes
 		{
-			files: [ '*.scss' ],
+			files: ['*.scss'],
 			options: {
 				singleQuote: false,
 			},

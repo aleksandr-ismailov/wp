@@ -47,7 +47,9 @@
 		"source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume",
 		"source=${localWorkspaceFolderBasename}-composer,target=${containerWorkspaceFolder}/vendor,type=volume",
 		"source=${localWorkspaceFolderBasename}-playwright,target=${containerWorkspaceFolder}/test-results,type=volume",
+		"source=${localWorkspaceFolderBasename}-next-cache,target=${containerWorkspaceFolder}/client/.next,type=volume",
 		"source=${localWorkspaceFolderBasename}-npm-cache,target=/root/.npm,type=volume",
+		"source=${localWorkspaceFolderBasename}-yarn-cache,target=/root/.yarn,type=volume",
 		"source=${localWorkspaceFolderBasename}-composer-cache,target=/root/.composer/cache,type=volume",
 		"source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
 	],
@@ -55,6 +57,7 @@
 		"DOCKER_BUILDKIT": "1",
 		"NODE_OPTIONS": "--max-old-space-size=4096",
 		"NPM_CONFIG_CACHE": "/root/.npm",
+		"YARN_CACHE_FOLDER": "/root/.yarn",
 		"COMPOSER_CACHE_DIR": "/root/.composer/cache",
 		"XDEBUG_MODE": "off"
 	},
@@ -89,14 +92,12 @@
 				"editor.formatOnSave": true,
 				"editor.renderLineHighlight": "gutter",
 				"editor.glyphMargin": true,
-				"editor.inlayHints.enabled": "on",
+				"editor.inlayHints.enabled": "off",
 				"editor.bracketPairColorization.enabled": true,
 				"editor.guides.bracketPairs": "active",
-				"editor.codeActionsOnSave": {
-					"source.fixAll.eslint": "explicit",
-					"source.fixAll.stylelint": "explicit",
-					"source.organizeImports": "explicit",
-					"source.addMissingImports": "explicit"
+				"[php]": {
+					"editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+					"editor.formatOnSave": true
 				},
 				"[css]": {
 					"editor.defaultFormatter": null,
@@ -105,12 +106,12 @@
 				"intelephense.files.maxSize": 5000000,
 				"typescript.preferences.quoteStyle": "single",
 				"typescript.preferences.importModuleSpecifier": "relative",
-				"typescript.inlayHints.parameterNames.enabled": "all",
-				"typescript.inlayHints.variableTypes.enabled": true,
-				"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+				"typescript.inlayHints.parameterNames.enabled": "none",
+				"typescript.inlayHints.variableTypes.enabled": false,
+				"typescript.inlayHints.functionLikeReturnTypes.enabled": false,
 				"javascript.preferences.quoteStyle": "single",
-				"javascript.inlayHints.parameterNames.enabled": "all",
-				"javascript.inlayHints.variableTypes.enabled": true,
+				"javascript.inlayHints.parameterNames.enabled": "none",
+				"javascript.inlayHints.variableTypes.enabled": false,
 				"emmet.includeLanguages": {
 					"javascript": "javascriptreact"
 				},
@@ -184,6 +185,7 @@
 				"gitlens.showWelcomeOnInstall": false,
 				"gitlens.showWhatsNewAfterUpgrades": false,
 				"intelephense.format.enable": true,
+				"intelephense.format.braces": "k&r",
 				"intelephense.diagnostics.enable": true,
 				"intelephense.completion.triggerParameterHints": true,
 				"intelephense.completion.insertUseDeclaration": true,
@@ -267,12 +269,19 @@
 				"php.suggest.basic": false,
 				"php.validate.enable": false,
 				"phpcs.enable": true,
-				"phpcs.standard": "./phpcs.xml",
+				"phpcs.standard": "WordPress",
 				"phpcs.executablePath": "./vendor/bin/phpcs",
 				"prettier.requireConfig": true,
 				"prettier.useEditorConfig": true,
 				"eslint.workingDirectories": [
-					"."
+					{
+						"directory": "./client",
+						"changeProcessCWD": true
+					},
+					{
+						"directory": "./wp-content/themes/client-api",
+						"changeProcessCWD": true
+					}
 				],
 				"eslint.validate": [
 					"javascript",
@@ -284,7 +293,19 @@
 					"cache": true,
 					"cacheLocation": ".eslintcache"
 				},
-				"eslint.run": "onSave",
+				"eslint.enable": true,
+				"eslint.debug": false,
+				"eslint.run": "onType",
+				"eslint.lintTask.enable": true,
+				"problems.showCurrentInStatus": true,
+				"eslint.problems.shortenToSingleLine": false,
+				"eslint.format.enable": false,
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit",
+					"source.fixAll.stylelint": "explicit",
+					"source.organizeImports": "explicit",
+					"source.addMissingImports": "explicit"
+				},
 				"eslint.nodeEnv": null,
 				"stylelint.enable": true,
 				"stylelint.validate": [

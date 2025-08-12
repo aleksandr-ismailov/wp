@@ -5,7 +5,6 @@ export interface ApiError {
 
 export interface FormSettings {
 	formTitle?: string;
-	formDescription?: string;
 	buttonText?: string;
 }
 
@@ -17,29 +16,53 @@ export interface SeoData {
 
 export interface WordPressUser {
 	id: number;
-	username: string;
-	email: string;
-	display_name: string;
-	roles: string[];
-	capabilities: string[];
-	authenticated: boolean;
+	name: string;
+	email?: string;
+	url: string;
+	description: string;
+	link: string;
+	slug: string;
+	avatar_urls: {
+		24: string;
+		48: string;
+		96: string;
+	};
+	meta: unknown[];
+	roles?: string[];
 }
 
 export interface WordPressPage {
 	id: number;
-	title: string;
-	slug: string;
-	content: string;
-	excerpt: string;
 	date: string;
+	date_gmt: string;
+	guid: {
+		rendered: string;
+	};
 	modified: string;
+	modified_gmt: string;
+	slug: string;
 	status: string;
+	type: string;
 	link: string;
-	featuredImage: string | null;
+	title: {
+		rendered: string;
+	};
+	content: {
+		rendered: string;
+		protected: boolean;
+	};
+	excerpt: {
+		rendered: string;
+		protected: boolean;
+	};
+	author: number;
+	featured_media: number;
+	parent: number;
+	menu_order: number;
+	comment_status: string;
+	ping_status: string;
+	template: string;
 	meta: Record<string, unknown>;
-	formSettings?: FormSettings;
-	blockStyles?: string;
-	seo?: SeoData;
 }
 
 export interface PagesResponse {

@@ -1,13 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
 import type { FormSettings } from '@/lib/wordpress-api';
@@ -20,7 +14,8 @@ interface SignInFormProps {
 	formSettings?: FormSettings;
 }
 
-export function SignInForm({ formSettings }: SignInFormProps) {
+export const SignInForm = (props: SignInFormProps) => {
+	const { formSettings } = props;
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
@@ -53,13 +48,9 @@ export function SignInForm({ formSettings }: SignInFormProps) {
 	};
 
 	return (
-		<Card className="w-full mx-auto max-w-md">
+		<Card className="w-full">
 			<CardHeader>
 				<CardTitle>{formSettings?.formTitle || 'Sign In'}</CardTitle>
-				<CardDescription>
-					{formSettings?.formDescription ||
-						'Enter your credentials to access your account'}
-				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<form onSubmit={handleSubmit} className="space-y-4">
@@ -114,4 +105,4 @@ export function SignInForm({ formSettings }: SignInFormProps) {
 			</CardContent>
 		</Card>
 	);
-}
+};

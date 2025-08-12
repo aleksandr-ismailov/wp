@@ -44,8 +44,9 @@ export default async function HomePage() {
 
 		pages = pagesData.pages;
 		user = userData;
-	} catch {
-		error = 'Failed to load data';
+	} catch (err) {
+		console.error('Error loading data:', err);
+		error = err instanceof Error ? err.message : 'Failed to load data';
 	}
 
 	return (
@@ -58,7 +59,8 @@ export default async function HomePage() {
 						</h1>
 						{user && (
 							<p className="text-muted-foreground">
-								{user.email} • {user.roles.join(', ')}
+								{user.email || 'No email'} •{' '}
+								{user.roles?.join(', ') || 'User'}
 							</p>
 						)}
 					</div>
@@ -94,10 +96,10 @@ export default async function HomePage() {
 											className="border rounded-lg p-4"
 										>
 											<h3 className="font-semibold">
-												{page.title}
+												{page.title.rendered}
 											</h3>
 											<p className="text-sm text-muted-foreground">
-												{page.excerpt}
+												{page.excerpt.rendered}
 											</p>
 											<div className="flex gap-2 mt-2 text-xs text-muted-foreground">
 												<span>ID: {page.id}</span>

@@ -1,4 +1,5 @@
 import type { DefaultSession, DefaultUser } from 'next-auth';
+import type { ApiError } from './api';
 
 declare module 'next-auth' {
 	interface Session {
@@ -7,6 +8,7 @@ declare module 'next-auth' {
 			username: string;
 			password: string;
 		} & DefaultSession['user'];
+		error?: ApiError;
 	}
 
 	interface User extends DefaultUser {
@@ -20,5 +22,6 @@ declare module 'next-auth/jwt' {
 		id: string;
 		username: string;
 		password: string;
+		error?: string;
 	}
 }

@@ -59,19 +59,17 @@ function get_page_by_slug( $request ) {
 
 	$content       = apply_filters( 'the_content', $page->post_content );
 	$form_settings = get_page_block_settings( $page );
-	$block_styles  = wp_get_global_stylesheet();
 
 	return array(
 		'id'            => $page->ID,
-		'title'         => sanitize_text_field( $page->post_title ),
+		'title'         => $page->post_title,
 		'content'       => $content,
-		'slug'          => sanitize_text_field( $page->post_name ),
+		'slug'          => $page->post_name,
 		'form_settings' => $form_settings,
-		'block_styles'  => $block_styles,
 		'seo'           => array(
-			'metaTitle'       => sanitize_text_field( get_post_meta( $page->ID, 'seo_meta_title', true ) ),
-			'metaDescription' => sanitize_textarea_field( get_post_meta( $page->ID, 'seo_meta_description', true ) ),
-			'robots'          => sanitize_text_field( get_post_meta( $page->ID, 'seo_robots', true ) ),
+			'metaTitle'       => get_post_meta( $page->ID, 'seo_meta_title', true ),
+			'metaDescription' => get_post_meta( $page->ID, 'seo_meta_description', true ),
+			'robots'          => get_post_meta( $page->ID, 'seo_robots', true ),
 		),
 	);
 }
@@ -85,9 +83,8 @@ function get_page_by_slug( $request ) {
  */
 function get_page_block_settings( $page ) {
 	$form_settings = array(
-		'form_title'       => '',
-		'form_description' => '',
-		'button_text'      => '',
+		'form_title'  => '',
+		'button_text' => '',
 	);
 
 	if ( ! $page instanceof WP_Post ) {
@@ -101,40 +98,20 @@ function get_page_block_settings( $page ) {
 			$attrs = $block['attrs'];
 
 			$form_settings['form_title'] = ! empty( $attrs['formTitle'] )
-				? sanitize_text_field( $attrs['formTitle'] )
-				: '';
-
-			$form_settings['form_description'] = ! empty( $attrs['formDescription'] )
-				? sanitize_textarea_field( $attrs['formDescription'] )
+				? $attrs['formTitle']
 				: '';
 
 			$form_settings['button_text'] = ! empty( $attrs['buttonText'] )
-				? sanitize_text_field( $attrs['buttonText'] )
+				? $attrs['buttonText']
 				: '';
 
 			break;
 		}
 	}
 
-	if ( empty( $form_settings['form_title'] ) ) {
-		$form_settings['form_title'] = sanitize_text_field(
-			get_post_meta( $page->ID, 'form_title', true )
-		);
-	}
-
-	if ( empty( $form_settings['form_description'] ) ) {
-		$form_settings['form_description'] = sanitize_textarea_field(
-			get_post_meta( $page->ID, 'form_description', true )
-		);
-	}
-
-	if ( empty( $form_settings['button_text'] ) ) {
-		$form_settings['button_text'] = sanitize_text_field(
-			get_post_meta( $page->ID, 'button_text', true )
-		);
-	}
-
 	return $form_settings;
 }
+
+
 
 add_action( 'rest_api_init', 'register_custom_api_endpoints' );

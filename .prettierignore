@@ -1,0 +1,2 @@
+# Configuration files that should not be formatted by Prettier
+.eslintrc

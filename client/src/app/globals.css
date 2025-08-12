@@ -80,6 +80,10 @@
 
 	--font-family-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
+	--line-height-tight: 1.2;
+	--line-height-normal: 1.4;
+	--line-height-relaxed: 1.6;
+
 	--radius-ds-4: 8px;
 	--radius-ds-8: 8px;
 }
@@ -170,17 +174,14 @@
 	--font-size-ds-large: var(--text-ds-18);
 	--font-size-ds-xlarge: var(--text-ds-24);
 
-	--font-size-h6: var(--wp--preset--font-size--h6);
-	--font-size-h5: var(--wp--preset--font-size--h5);
-	--font-size-h4: var(--wp--preset--font-size--h4);
-	--font-size-h3: var(--wp--preset--font-size--h3);
-	--font-size-h2: var(--wp--preset--font-size--h2);
-	--font-size-h1: var(--wp--preset--font-size--h1);
-
 	--font-weight-normal: 400;
 	--font-weight-medium: 500;
 	--font-weight-semibold: 600;
 	--font-weight-bold: 700;
+
+	--line-height-tight: var(--line-height-tight);
+	--line-height-normal: var(--line-height-normal);
+	--line-height-relaxed: var(--line-height-relaxed);
 
 	--radius: var(--radius);
 }
@@ -193,16 +194,14 @@
 	}
 }
 
-@layer utilities {
-	.flex-x {
-		display: flex;
-		flex-direction: row;
-	}
+@utility flex-x {
+	display: flex;
+	flex-direction: row;
+}
 
-	.flex-y {
-		display: flex;
-		flex-direction: column;
-	}
+@utility flex-y {
+	display: flex;
+	flex-direction: column;
 }
 
 .prose h1,
@@ -237,33 +236,126 @@
 }
 
 .has-primary-color {
-	color: var(--primary);
+
+	@apply text-primary;
 }
 
 .has-destructive-color {
-	color: var(--destructive);
+
+	@apply text-destructive;
 }
 
 .has-text-color {
-	color: inherit;
+
+	@apply text-inherit;
 }
 
-.has-x-large-font-size {
-	font-size: var(--text-ds-24);
-	line-height: 1.4;
+.has-x-large-font-size,
+.wp-content .has-x-large-font-size {
+	font-size: var(--text-ds-24) !important;
+	line-height: var(--line-height-normal);
 }
 
-.has-large-font-size {
-	font-size: var(--text-ds-18);
-	line-height: 1.4;
+.has-large-font-size,
+.wp-content .has-large-font-size {
+	font-size: var(--text-ds-18) !important;
+	line-height: var(--line-height-normal);
 }
 
-.has-medium-font-size {
+.has-medium-font-size,
+.wp-content .has-medium-font-size {
+	font-size: var(--text-ds-16) !important;
+	line-height: var(--line-height-normal);
+}
+
+.has-small-font-size,
+.wp-content .has-small-font-size {
+	font-size: var(--text-ds-14) !important;
+	line-height: var(--line-height-normal);
+}
+
+.wp-content .wp-block-content {
+	font-family: var(--font-family-sans);
+	color: var(--foreground);
+}
+
+.wp-content .wp-block-heading {
+
+	@apply font-bold text-foreground;
+	margin: 0 0 var(--spacing-ds-16) 0;
+	line-height: var(--line-height-tight);
+}
+
+.wp-content h1,
+.wp-content .wp-block-heading[aria-level="1"] {
+	font-size: 32px;
+}
+
+.wp-content h2,
+.wp-content .wp-block-heading[aria-level="2"] {
+	font-size: 24px;
+}
+
+.wp-content h3,
+.wp-content .wp-block-heading[aria-level="3"] {
+	font-size: 20px;
+}
+
+.wp-content h4,
+.wp-content .wp-block-heading[aria-level="4"] {
+	font-size: 18px;
+}
+
+.wp-content h5,
+.wp-content .wp-block-heading[aria-level="5"] {
+	font-size: 16px;
+}
+
+.wp-content h6,
+.wp-content .wp-block-heading[aria-level="6"] {
+	font-size: 14px;
+}
+
+.wp-content .wp-block-paragraph {
+
+	@apply text-foreground;
+	margin: 0 0 var(--spacing-ds-16) 0;
+	line-height: var(--line-height-normal);
 	font-size: var(--text-ds-16);
-	line-height: 1.4;
+	font-weight: var(--font-weight-normal);
 }
 
-.has-small-font-size {
-	font-size: var(--text-ds-14);
-	line-height: 1.4;
+.wp-content .wp-block-list {
+
+	@apply text-foreground;
+	margin: 0 0 var(--spacing-ds-16) 0;
+	padding-left: var(--spacing-ds-20);
+	font-size: var(--text-ds-16);
+	font-weight: var(--font-weight-normal);
+}
+
+.wp-content .wp-block-list li {
+	margin-bottom: var(--spacing-ds-4);
+	line-height: var(--line-height-normal);
+}
+
+.wp-content .wp-block-columns {
+
+	@apply flex-x;
+	gap: var(--spacing-ds-24);
+	margin-bottom: var(--spacing-ds-24);
+}
+
+.wp-content .wp-block-column {
+	flex: 1;
+}
+
+.wp-content .wp-block-image {
+	margin-bottom: var(--spacing-ds-16);
+}
+
+.wp-content .wp-block-image img {
+
+	@apply max-w-full h-auto;
+	border-radius: var(--radius-ds-8);
 }

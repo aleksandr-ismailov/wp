@@ -29,21 +29,6 @@ declare module '@wordpress/components' {
 	}) => JSX.Element;
 }
 
-declare module '@wordpress/i18n' {
-	export function __(text: string, domain?: string): string;
-}
-
 declare module '@wordpress/blocks' {
 	export function registerBlockType(name: string, settings: any): void;
-}
-
-interface BlockAttributes {
-	formTitle: string;
-	formDescription: string;
-	buttonText: string;
-}
-
-interface EditProps {
-	attributes: BlockAttributes;
-	setAttributes: ( _attributes: Partial< BlockAttributes > ) => void;
 }

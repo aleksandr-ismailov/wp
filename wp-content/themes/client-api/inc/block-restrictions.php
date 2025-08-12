@@ -7,30 +7,7 @@
  * @since 1.0.0
  */
 
-/**
- * Restrict dangerous blocks that could break design system
- *
- * @param array $allowed_blocks Array of allowed block types.
- * @param object $block_editor_context Block editor context.
- * @return array Modified array of allowed blocks.
- * @since 1.0.0
- */
-add_filter( 'allowed_block_types_all', 'client_api_restrict_blocks', 10, 2 );
 
-function client_api_restrict_blocks( $allowed_blocks, $block_editor_context ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
-	$safe_blocks = array(
-		'core/heading',
-		'core/paragraph',
-		'core/list',
-		'core/list-item',
-		'core/image',
-		'core/columns',
-		'core/column',
-		'client-api/sign-in-page',
-	);
-
-	return $safe_blocks;
-}
 
 /**
  * Disable code editor in block editor
@@ -73,9 +50,7 @@ function client_api_disable_custom_css_html() {
 					wp.blocks.unregisterBlockType( "core/shortcode" );
 					wp.blocks.unregisterBlockType( "core/embed" );
 
-					wp.data.dispatch( "core/edit-post" ).updateEditorSettings({
-						codeEditingEnabled: false
-					});
+
 				});
 				'
 			);

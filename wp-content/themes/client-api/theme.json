@@ -11,7 +11,8 @@
 				"core/list-item",
 				"core/image",
 				"core/columns",
-				"core/column"
+				"core/column",
+				"client-api/sign-in-page"
 			]
 		},
 		"color": {

@@ -5,7 +5,7 @@ import { signOut } from 'next-auth/react';
 
 export function SignOutButton() {
 	return (
-		<Button variant="outline" onClick={ () => signOut() }>
+		<Button variant="outline" onClick={() => signOut()}>
 			Sign Out
 		</Button>
 	);
