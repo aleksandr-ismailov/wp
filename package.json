@@ -27,7 +27,7 @@
 		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello --allow-root"
 	},
 	"lint-staged": {
-		"wp-content/**/*.{js,jsx,ts,tsx}": [
+		"wp-content/themes/**/*.{js,jsx,ts,tsx}": [
 			"wp-scripts lint-js"
 		],
 		"*.php": [

@@ -1,2 +1,6 @@
 # Configuration files that should not be formatted by Prettier
 .eslintrc
+
+# WordPress blocks should use WordPress coding standards, not Prettier
+wp-content/plugins/*.js
+wp-content/themes/**/blocks/**/*.js

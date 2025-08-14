@@ -22,6 +22,16 @@ function register_custom_api_endpoints() {
 			'permission_callback' => '__return_true',
 		)
 	);
+
+	register_rest_route(
+		'client-api/v1',
+		'/home-page-sidebars',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'get_home_page_sidebars',
+			'permission_callback' => '__return_true',
+		)
+	);
 }
 
 /**
@@ -112,6 +122,74 @@ function get_page_block_settings( $page ) {
 	return $form_settings;
 }
 
+/**
+ * Get home page sidebars content via REST API
+ *
+ * @return array|WP_Error Sidebars data or error object.
+ * @since 1.0.0
+ */
+function get_home_page_sidebars() {
+	$home_page = get_page_by_path( 'home' );
 
+	if ( ! $home_page ) {
+		$home_page = get_option( 'page_on_front' );
+		if ( $home_page ) {
+			$home_page = get_post( $home_page );
+		}
+	}
+
+	if ( ! $home_page instanceof WP_Post ) {
+		return new WP_Error( 'no_home_page', 'Home page not found', array( 'status' => 404 ) );
+	}
+
+	$sidebar_content = get_sidebar_content_from_blocks( $home_page );
+
+	return array(
+		'leftSidebar'  => array(
+			'content' => $sidebar_content['leftSidebarContent'],
+		),
+		'rightSidebar' => array(
+			'content' => $sidebar_content['rightSidebarContent'],
+		),
+	);
+}
+
+/**
+ * Extract sidebar content from page blocks
+ *
+ * @param WP_Post $page Page object.
+ * @return array Sidebar content.
+ * @since 1.0.0
+ */
+function get_sidebar_content_from_blocks( $page ) {
+	$sidebar_content = array(
+		'leftSidebarContent'  => '',
+		'rightSidebarContent' => '',
+	);
+
+	if ( ! $page instanceof WP_Post ) {
+		return $sidebar_content;
+	}
+
+	$blocks = parse_blocks( $page->post_content );
+
+	foreach ( $blocks as $block ) {
+		if ( 'client-api/sidebar-content' === $block['blockName'] && ! empty( $block['attrs'] ) ) {
+			$attrs = $block['attrs'];
+
+			$sidebar_content['leftSidebarContent'] = ! empty( $attrs['leftSidebarContent'] )
+				? $attrs['leftSidebarContent']
+				: '';
+
+			$sidebar_content['rightSidebarContent'] = ! empty( $attrs['rightSidebarContent'] )
+				? $attrs['rightSidebarContent']
+				: '';
+
+			break;
+		}
+	}
+
+	return $sidebar_content;
+}
 
 add_action( 'rest_api_init', 'register_custom_api_endpoints' );

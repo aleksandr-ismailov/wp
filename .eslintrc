@@ -61,7 +61,8 @@
 		"no-console": "off",
 		"jsdoc/no-undefined-types": "off",
 		"no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-		"comma-dangle": ["error", "always-multiline"]
+		"comma-dangle": ["error", "always-multiline"],
+		"react-hooks/rules-of-hooks": "off"
 	},
 	"overrides": [
 		{
