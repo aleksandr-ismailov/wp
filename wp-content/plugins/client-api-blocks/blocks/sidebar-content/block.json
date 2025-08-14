@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "client-api/sidebar-content",
+	"version": "0.1.0",
+	"title": "Sidebar Content",
+	"category": "widgets",
+	"icon": "layout",
+	"description": "Configure content for left and right sidebars",
+	"keywords": [
+		"sidebar",
+		"panel",
+		"side panel",
+		"widget",
+		"content"
+	],
+	"attributes": {
+		"leftSidebarContent": {
+			"type": "string",
+			"default": ""
+		},
+		"rightSidebarContent": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"align": true,
+		"html": false
+	},
+	"textdomain": "client-api-blocks",
+	"editorScript": "file:../../build/index.js",
+	"editorStyle": "file:../../build/index.css",
+	"render": "file:./render.php"
+}

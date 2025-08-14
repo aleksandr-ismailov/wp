@@ -1,0 +1,14 @@
+{
+	"name": "client-api-blocks",
+	"version": "1.0.0",
+	"description": "Custom blocks for client API headless architecture",
+	"author": "Developer",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^27.9.0"
+	}
+}

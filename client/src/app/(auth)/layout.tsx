@@ -16,7 +16,7 @@ const AuthLayout = async (props: AuthLayoutProps) => {
 	const session = await getServerSession(authOptions);
 
 	if (session) {
-		redirect('/home');
+		redirect('/');
 	}
 
 	return <LayoutContainer>{children}</LayoutContainer>;

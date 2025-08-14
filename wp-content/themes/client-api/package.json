@@ -17,17 +17,10 @@
 		"npm": ">=10.2.3"
 	},
 	"devDependencies": {
-		"@types/react": "^19.1.9",
-		"@types/react-dom": "^19.1.7",
 		"@wordpress/eslint-plugin": "^22.14.0",
 		"@wordpress/scripts": "^30.20.0"
 	},
 	"scripts": {
-		"build": "wp-scripts build",
-		"start": "wp-scripts start",
-		"format": "wp-scripts format",
-		"lint:css": "wp-scripts lint-style",
-		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update"
 	}
 }

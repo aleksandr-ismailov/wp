@@ -5,6 +5,15 @@
 	"version": "0.1.0",
 	"title": "Sign In Page",
 	"category": "widgets",
+	"icon": "admin-users",
+	"description": "Create a sign-in page with configurable content",
+	"keywords": [
+		"login",
+		"sign in",
+		"auth",
+		"form",
+		"user"
+	],
 	"attributes": {
 		"formTitle": {
 			"type": "string",
@@ -16,7 +25,11 @@
 		}
 	},
 	"supports": {
-		"align": true
+		"align": true,
+		"html": false
 	},
-	"editorScript": "file:./index.tsx"
+	"textdomain": "client-api-blocks",
+	"editorScript": "file:../../build/index.js",
+	"editorStyle": "file:../../build/index.css",
+	"render": "file:./render.php"
 }

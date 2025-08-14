@@ -24,7 +24,8 @@
 		"add-block:dynamic": "cd wp-content/plugins && yarn dlx @wordpress/create-block@latest --variant=dynamic",
 		"add-block:theme": "cd wp-content/themes/client-api && yarn dlx @wordpress/create-block@latest --namespace=client-api --template=src && cd ../../../ && find wp-content/themes/client-api -name 'package-lock.json' -delete && find wp-content/themes/client-api -name 'node_modules' -type d -exec rm -rf {} + 2>/dev/null || true && yarn install",
 		"setup-wp": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp core install --url=\"http://localhost:8888\" --title=\"WordPress Block Development\" --admin_user=\"admin\" --admin_password=\"admin\" --admin_email=\"admin@example.com\" --skip-email --allow-root",
-		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello --allow-root"
+		"activate-plugins": "docker-compose -f .devcontainer/docker-compose.yml exec wordpress wp plugin activate --all --exclude=akismet,hello --allow-root",
+		"build:blocks": "yarn workspace client-api-blocks build"
 	},
 	"lint-staged": {
 		"wp-content/themes/**/*.{js,jsx,ts,tsx}": [
@@ -73,8 +74,7 @@
 	"workspaces": [
 		"client",
 		"wp-content/plugins/*",
-		"wp-content/themes/*",
-		"wp-content/themes/client-api/*"
+		"wp-content/themes/*"
 	],
 	"installConfig": {
 		"hoistingLimits": "dependencies"

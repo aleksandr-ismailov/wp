@@ -1,11 +1,41 @@
 <?php
 /**
- * API Endpoints
+ * Plugin Name: Client API Core
+ * Plugin URI: https://example.com
+ * Description: Core API functionality for headless WordPress client applications
+ * Version: 1.0.0
+ * Author: Developer
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: client-api-core
  *
- * @package Client API
- * @subpackage API
- * @since 1.0.0
+ * @package Client_API_Core
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+	add_action(
+		'admin_notices',
+		function () {
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'Client API Core requires PHP 7.4 or higher.', 'client-api-core' ) . '</p></div>';
+		}
+	);
+	return;
+}
+
+global $wp_version;
+if ( version_compare( $wp_version, '5.0', '<' ) ) {
+	add_action(
+		'admin_notices',
+		function () {
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'Client API Core requires WordPress 5.0 or higher.', 'client-api-core' ) . '</p></div>';
+		}
+	);
+	return;
+}
 
 /**
  * Register custom REST API endpoints
@@ -30,6 +60,16 @@ function register_custom_api_endpoints() {
 			'methods'             => 'GET',
 			'callback'            => 'get_home_page_sidebars',
 			'permission_callback' => '__return_true',
+		)
+	);
+
+	register_rest_route(
+		'client-api/v1',
+		'/auth',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'get_current_user_auth',
+			'permission_callback' => 'is_user_logged_in',
 		)
 	);
 }
@@ -190,6 +230,27 @@ function get_sidebar_content_from_blocks( $page ) {
 	}
 
 	return $sidebar_content;
+}
+
+/**
+ * Get current user authentication data via REST API
+ *
+ * @return array|WP_Error User data or error object.
+ * @since 1.0.0
+ */
+function get_current_user_auth() {
+	$current_user = wp_get_current_user();
+
+	if ( ! $current_user || 0 === $current_user->ID ) {
+		return new WP_Error( 'no_auth', 'User not authenticated', array( 'status' => 401 ) );
+	}
+
+	return array(
+		'id'    => $current_user->ID,
+		'name'  => $current_user->display_name,
+		'email' => $current_user->user_email,
+		'roles' => $current_user->roles,
+	);
 }
 
 add_action( 'rest_api_init', 'register_custom_api_endpoints' );

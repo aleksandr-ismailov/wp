@@ -103,10 +103,6 @@ add_action( 'admin_menu', 'client_api_remove_editor_menu_items', 999 );
 
 function client_api_remove_editor_menu_items() {
 	remove_menu_page( 'themes.php' );
-	remove_menu_page( 'plugins.php' );
-	remove_menu_page( 'tools.php' );
-	remove_menu_page( 'options-general.php' );
-
 	remove_submenu_page( 'themes.php', 'widgets.php' );
 	remove_submenu_page( 'themes.php', 'nav-menus.php' );
 	remove_submenu_page( 'themes.php', 'customize.php' );
