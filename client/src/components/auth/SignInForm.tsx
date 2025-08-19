@@ -38,7 +38,7 @@ export const SignInForm = (props: SignInFormProps) => {
 			if (result?.error) {
 				setError('Invalid credentials');
 			} else if (result?.ok) {
-				router.push('/home');
+				router.push('/');
 			}
 		} catch {
 			setError('Something went wrong');

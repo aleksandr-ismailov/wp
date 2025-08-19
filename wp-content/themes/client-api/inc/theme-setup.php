@@ -21,37 +21,29 @@ function client_api_theme_setup() {
 }
 
 /**
- * Restrict editor capabilities to protect design system
+ * Enable SVG upload support
  *
  * @since 1.0.0
  */
-add_action( 'admin_init', 'client_api_restrict_editor_capabilities' );
+add_filter( 'upload_mimes', 'client_api_add_svg_support' );
 
-function client_api_restrict_editor_capabilities() {
-	// Remove dangerous capabilities for editors
-	$role = get_role( 'editor' );
-	if ( $role ) {
-		$role->remove_cap( 'edit_theme_options' );
-		$role->remove_cap( 'switch_themes' );
-		$role->remove_cap( 'edit_themes' );
-		$role->remove_cap( 'customize' );
-	}
+function client_api_add_svg_support( $mimes ) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
 }
 
 /**
- * Disable theme and plugin editing in admin
+ * Fix SVG display in media library
  *
  * @since 1.0.0
  */
-add_action( 'admin_init', 'client_api_disable_file_editing' );
+add_filter( 'wp_check_filetype_and_ext', 'client_api_fix_svg_mime_type', 10, 4 );
 
-function client_api_disable_file_editing() {
-	// Disable theme editor
-	remove_action( 'admin_menu', '_add_themes_utility_last', 101 );
-
-	// Remove plugin editor
-	remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
-
-	// Remove theme editor
-	remove_submenu_page( 'themes.php', 'theme-editor.php' );
+function client_api_fix_svg_mime_type( $data, $file, $filename, $mimes ) {
+	$filetype = wp_check_filetype( $filename, $mimes );
+	return [
+		'ext'             => $filetype['ext'],
+		'type'            => $filetype['type'],
+		'proper_filename' => $data['proper_filename'],
+	];
 }

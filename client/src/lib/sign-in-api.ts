@@ -6,7 +6,7 @@ export const getSignInContent = async (): Promise<WordPressPage | null> => {
 		const WORDPRESS_API_BASE =
 			process.env.NEXT_PUBLIC_WORDPRESS_URL || 'http://localhost:8888';
 		const response = await fetch(
-			`${WORDPRESS_API_BASE}/index.php?rest_route=/client-api/v1/page/sign-in-content`,
+			`${WORDPRESS_API_BASE}/index.php?rest_route=/client-api/v1/page/sign-in`,
 			{
 				method: 'GET',
 				headers: {

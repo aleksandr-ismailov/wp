@@ -1,40 +1,68 @@
-import type { RSSItem } from '@/types/rss';
+import type { RSSItem } from '@/shared/types/rss';
 import Parser from 'rss-parser';
 
+interface RSSParserItem {
+	title?: string;
+	link?: string;
+	contentSnippet?: string;
+	content?: string;
+	description?: string;
+	pubDate?: string;
+}
+
 const parser = new Parser();
+
+function cleanHtmlContent(htmlContent: string): string {
+	if (!htmlContent) return '';
+
+	return htmlContent
+		.replace(/<[^>]*>/g, ' ')
+		.replace(/&[^;]+;/g, ' ')
+		.replace(/\s+/g, ' ')
+		.trim();
+}
 
 export async function fetchRSSFeeds(): Promise<RSSItem[]> {
 	try {
 		const [reactFeed, nextjsFeed] = await Promise.all([
-			parser.parseURL('https://www.reddit.com/r/reactjs/.rss'),
-			parser.parseURL('https://www.reddit.com/r/nextjs/.rss'),
+			parser.parseURL('https://dev.to/feed/tag/react'),
+			parser.parseURL('https://dev.to/feed/tag/nextjs'),
 		]);
 
-		const reactItems: RSSItem[] = reactFeed.items.map((item) => ({
-			title: item.title || '',
-			link: item.link || '',
-			description: item.contentSnippet || '',
-			pubDate: item.pubDate || '',
-			source: 'react',
-		}));
+		const mapFeedItems = (
+			items: RSSParserItem[],
+			source: 'react' | 'nextjs'
+		): RSSItem[] =>
+			items.map((item: RSSParserItem) => ({
+				title: item.title || '',
+				link: item.link || '',
+				description:
+					item.contentSnippet ||
+					cleanHtmlContent(item.description || '') ||
+					cleanHtmlContent(item.content || '') ||
+					'',
+				pubDate: item.pubDate || '',
+				source,
+			}));
 
-		const nextjsItems: RSSItem[] = nextjsFeed.items.map((item) => ({
-			title: item.title || '',
-			link: item.link || '',
-			description: item.contentSnippet || '',
-			pubDate: item.pubDate || '',
-			source: 'nextjs',
-		}));
+		const reactItems = mapFeedItems(reactFeed.items, 'react');
+		const nextjsItems = mapFeedItems(nextjsFeed.items, 'nextjs');
 
-		return [...reactItems, ...nextjsItems]
+		const allItems = [...reactItems, ...nextjsItems];
+
+		const uniqueItems = allItems.filter(
+			(item, index, self) =>
+				index === self.findIndex((t) => t.link === item.link)
+		);
+
+		return uniqueItems
 			.sort(
 				(a, b) =>
 					new Date(b.pubDate).getTime() -
 					new Date(a.pubDate).getTime()
 			)
-			.slice(0, 12);
-	} catch (error) {
-		console.error('RSS fetch error:', error);
+			.slice(0, 50);
+	} catch {
 		return [];
 	}
 }

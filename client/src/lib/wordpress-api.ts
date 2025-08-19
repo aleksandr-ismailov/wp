@@ -63,6 +63,8 @@ export interface WordPressPage {
 	ping_status: string;
 	template: string;
 	meta: Record<string, unknown>;
+	formSettings?: FormSettings;
+	seo?: SeoData;
 }
 
 export interface PagesResponse {

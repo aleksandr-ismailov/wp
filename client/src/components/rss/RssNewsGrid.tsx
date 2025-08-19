@@ -1,11 +1,13 @@
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { fetchRSSFeeds } from '@/lib/rss-server';
 import type { RSSItem } from '@/shared/types/rss';
 
 interface NewsItemProps {
 	item: RSSItem;
 }
 
-export function NewsItem({ item }: NewsItemProps) {
+const NewsItem = ({ item }: NewsItemProps) => {
 	return (
 		<Card className="h-full">
 			<CardHeader>
@@ -41,4 +43,29 @@ export function NewsItem({ item }: NewsItemProps) {
 			</CardContent>
 		</Card>
 	);
-}
+};
+
+export const RssNewsGrid = async () => {
+	const items = await fetchRSSFeeds();
+
+	return (
+		<div className="flex-1 overflow-y-auto max-h-full min-h-0 pt-ds-24 px-ds-16">
+			{items.length === 0 ? (
+				<Alert>
+					<AlertDescription>No news available</AlertDescription>
+				</Alert>
+			) : (
+				<div className="flex-x flex-wrap items-stretch gap-6 justify-center">
+					{items.map((item, index) => (
+						<div
+							key={`${item.source}-${index}-${item.link}`}
+							className="w-[30%]"
+						>
+							<NewsItem item={item} />
+						</div>
+					))}
+				</div>
+			)}
+		</div>
+	);
+};

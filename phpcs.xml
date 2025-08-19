@@ -18,4 +18,9 @@
 		<type>error</type>
 	</rule>
 
+	<!-- Allow modern PHP array syntax -->
+	<rule ref="Universal.Arrays.DisallowShortArraySyntax">
+		<exclude-pattern>*</exclude-pattern>
+	</rule>
+
 </ruleset>
