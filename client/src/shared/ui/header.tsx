@@ -18,8 +18,8 @@ export const Header = (props: HeaderProps) => {
 	};
 
 	return (
-		<header className="bg-background border-b border-border">
-			<div className="container mx-auto px-4 py-3 flex items-center justify-between">
+		<header className="bg-background border-b border-border w-full">
+			<div className="mx-auto py-3 flex items-center justify-between px-ds-16 max-w-[90%]">
 				<Link href="/home" className="flex items-center space-x-2">
 					{logo}
 				</Link>

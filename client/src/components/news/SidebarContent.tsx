@@ -14,7 +14,7 @@ export const SidebarContent = async () => {
 					content={sidebarsData?.leftSidebar?.content || ''}
 				/>
 			</div>
-			<div className="flex-1 lg:w-[70%] flex flex-col max-h-full min-h-0">
+			<div className="grow-1 lg:w-[70%] flex flex-col max-h-full min-h-0">
 				<Suspense fallback={<NewsListSkeleton />}>
 					<NewsList />
 				</Suspense>
