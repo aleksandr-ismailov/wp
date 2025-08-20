@@ -11,7 +11,7 @@ const font = Inter({
 });
 
 export const metadata: Metadata = {
-	title: 'nextjs',
+	title: 'Webapp',
 	description: 'Webapp description',
 };
 
