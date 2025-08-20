@@ -25,7 +25,7 @@ const SidebarColumn = ({ content }: SidebarColumnProps) => {
 
 	return (
 		<div
-			className="max-h-full overflow-hidden pb-ds-16"
+			className="max-h-full overflow-hidden pb-[var(--spacing-16)] [&_img]:max-w-full [&_img]:h-auto [&_img]:max-h-full [&_img]:mb-[var(--spacing-16)]"
 			dangerouslySetInnerHTML={{ __html: cleanHTML }}
 		/>
 	);

@@ -1,4 +1,4 @@
-import type { RSSItem } from '@/shared/types/rss';
+import type { PaginatedNewsResponse, RSSItem } from '@/shared/types/rss';
 import { camelizeKeys } from './utils';
 
 interface DevToUser {
@@ -42,10 +42,14 @@ interface DevToArticle {
 	user: DevToUser;
 }
 
-async function fetchDevToArticles(tag: string): Promise<DevToArticle[]> {
+async function fetchDevToArticles(
+	tag: string,
+	page = 1,
+	perPage = 20
+): Promise<DevToArticle[]> {
 	try {
 		const response = await fetch(
-			`https://dev.to/api/articles?tag=${tag}&per_page=50`
+			`https://dev.to/api/articles?tag=${tag}&page=${page}&per_page=${perPage}`
 		);
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
@@ -61,13 +65,31 @@ async function fetchDevToArticles(tag: string): Promise<DevToArticle[]> {
 	}
 }
 
-export async function fetchRSSFeeds(): Promise<RSSItem[]> {
+export async function fetchRSSFeeds(
+	page?: number,
+	perPage?: number
+): Promise<PaginatedNewsResponse> {
+	const currentPage = page || 1;
+	const itemsPerPage = perPage || 20;
+
 	try {
 		const [reactArticles, nextjsArticles, wordpressArticles] =
 			await Promise.all([
-				fetchDevToArticles('react'),
-				fetchDevToArticles('nextjs'),
-				fetchDevToArticles('wordpress'),
+				fetchDevToArticles(
+					'react',
+					currentPage,
+					Math.ceil(itemsPerPage / 3)
+				),
+				fetchDevToArticles(
+					'nextjs',
+					currentPage,
+					Math.ceil(itemsPerPage / 3)
+				),
+				fetchDevToArticles(
+					'wordpress',
+					currentPage,
+					Math.ceil(itemsPerPage / 3)
+				),
 			]);
 
 		const mapArticleToRSSItem = (
@@ -99,14 +121,27 @@ export async function fetchRSSFeeds(): Promise<RSSItem[]> {
 				index === self.findIndex((t) => t.link === item.link)
 		);
 
-		return uniqueItems
-			.sort(
-				(a, b) =>
-					new Date(b.pubDate).getTime() -
-					new Date(a.pubDate).getTime()
-			)
-			.slice(0, 50);
+		const sortedItems = uniqueItems.sort(
+			(a, b) =>
+				new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+		);
+
+		const paginatedItems = sortedItems.slice(0, itemsPerPage);
+		const hasMore =
+			reactArticles.length === Math.ceil(itemsPerPage / 3) ||
+			nextjsArticles.length === Math.ceil(itemsPerPage / 3) ||
+			wordpressArticles.length === Math.ceil(itemsPerPage / 3);
+
+		return {
+			items: paginatedItems,
+			hasMore,
+			currentPage,
+		};
 	} catch {
-		return [];
+		return {
+			items: [],
+			hasMore: false,
+			currentPage,
+		};
 	}
 }

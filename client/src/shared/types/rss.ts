@@ -22,6 +22,17 @@ export interface RssChannelConfig {
 	category: 'react' | 'nextjs' | 'wordpress';
 }
 
+export interface PaginationParams {
+	page: number;
+	perPage: number;
+}
+
+export interface PaginatedNewsResponse {
+	items: RSSItem[];
+	hasMore: boolean;
+	currentPage: number;
+}
+
 export interface ApiError {
 	message: string;
 	status?: number;

@@ -28,14 +28,8 @@
 		"build:blocks": "yarn workspace client-api-blocks build"
 	},
 	"lint-staged": {
-		"wp-content/themes/**/*.{js,jsx,ts,tsx}": [
-			"wp-scripts lint-js"
-		],
-		"*.php": [
-			"composer lint"
-		],
-		"wp-content/**/*.{css,scss}": [
-			"stylelint --config .stylelintrc.json --allow-empty-input"
+		"**/*.{js,jsx,ts,tsx,php,css,scss}": [
+			"yarn lint"
 		]
 	},
 	"keywords": [

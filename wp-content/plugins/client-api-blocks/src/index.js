@@ -1,11 +1,6 @@
-import {
-	InnerBlocks,
-	InspectorControls,
-	useBlockProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
 import {
-	PanelBody,
 	Placeholder,
 	TextControl,
 	TextareaControl,
@@ -34,49 +29,35 @@ registerBlockType('client-api/sidebar-content', {
 		const blockProps = useBlockProps();
 
 		return (
-			<>
-				<InspectorControls>
-					<PanelBody
-						title={__('Sidebar Settings', 'client-api-blocks')}
-					>
-						<TextareaControl
-							label={__(
-								'Left Sidebar Content',
-								'client-api-blocks'
-							)}
-							value={leftSidebarContent}
-							onChange={(value) =>
-								setAttributes({
-									leftSidebarContent: value,
-								})
-							}
-							rows={6}
-						/>
-						<TextareaControl
-							label={__(
-								'Right Sidebar Content',
-								'client-api-blocks'
-							)}
-							value={rightSidebarContent}
-							onChange={(value) =>
-								setAttributes({
-									rightSidebarContent: value,
-								})
-							}
-							rows={6}
-						/>
-					</PanelBody>
-				</InspectorControls>
-				<div {...blockProps}>
-					<Placeholder
-						label={__('Sidebar Content', 'client-api-blocks')}
-						instructions={__(
-							'Configure left and right sidebar content using the settings panel.',
-							'client-api-blocks'
-						)}
-					/>
-				</div>
-			</>
+			<div {...blockProps}>
+				<h3>
+					{__('Sidebar Content Configuration', 'client-api-blocks')}
+				</h3>
+				<TextareaControl
+					label={__('Left Sidebar Content', 'client-api-blocks')}
+					value={leftSidebarContent}
+					onChange={(value) =>
+						setAttributes({ leftSidebarContent: value })
+					}
+					rows={6}
+					help={__(
+						'HTML content for the left sidebar',
+						'client-api-blocks'
+					)}
+				/>
+				<TextareaControl
+					label={__('Right Sidebar Content', 'client-api-blocks')}
+					value={rightSidebarContent}
+					onChange={(value) =>
+						setAttributes({ rightSidebarContent: value })
+					}
+					rows={6}
+					help={__(
+						'HTML content for the right sidebar',
+						'client-api-blocks'
+					)}
+				/>
+			</div>
 		);
 	},
 	save: () => null,

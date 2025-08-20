@@ -39,7 +39,7 @@ export function NewsItem({ item }: NewsItemProps) {
 	const sourceConfig = getSourceConfig(item.source);
 
 	return (
-		<Card className="w-full">
+		<Card className="w-full hover:scale-[1.005] hover:delay-300 transition-transform duration-300 delay-0">
 			<div className="flex flex-col lg:flex-row">
 				{item.socialImage && (
 					<div className="lg:w-1/3 xl:w-1/4 p-ds-24 lg:pr-0">
