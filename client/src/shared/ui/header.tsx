@@ -18,12 +18,9 @@ export const Header = (props: HeaderProps) => {
 	};
 
 	return (
-		<header className="bg-background border-b border-border w-full">
-			<div className="mx-auto py-3 flex items-center justify-between px-ds-16 max-w-[90%]">
-				<Link href="/home" className="flex items-center space-x-2">
-					{logo}
-				</Link>
-
+		<header className="bg-card grow-0 border-b border-border w-full shadow-sm">
+			<div className="mx-auto flex-x items-center justify-between p-ds-16 max-w-[90%]">
+				<Link href="/home">{logo}</Link>
 				<Button variant="outline" onClick={handleSignOut}>
 					Sign Out
 				</Button>

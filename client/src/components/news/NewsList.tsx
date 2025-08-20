@@ -51,7 +51,7 @@ export const NewsList = () => {
 			ref={scrollContainerRef}
 			className="flex-1 overflow-y-auto max-h-full min-h-0"
 		>
-			<div className="w-full px-ds-24 pt-ds-24 space-y-ds-24">
+			<div className="w-full px-ds-24 space-y-ds-24">
 				{articles.map((item) => (
 					<NewsItem key={item.link} item={item} />
 				))}

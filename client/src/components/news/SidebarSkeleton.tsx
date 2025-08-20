@@ -6,7 +6,7 @@ export const SidebarSkeleton = () => {
 			<div className="w-[15%] hidden lg:block">
 				<div className="animate-pulse bg-gray-200 h-32 rounded"></div>
 			</div>
-			<div className="grow-1 lg:w-[70%] flex flex-col max-h-full min-h-0">
+			<div className="grow-1 lg:w-[70%] flex-y max-h-full min-h-full">
 				<NewsListSkeleton />
 			</div>
 			<div className="w-[15%] hidden lg:block">

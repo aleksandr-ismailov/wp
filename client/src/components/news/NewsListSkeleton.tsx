@@ -4,15 +4,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 export function NewsListSkeleton() {
 	return (
 		<div className="flex-1 overflow-y-auto max-h-full min-h-0">
-			<div className="w-full px-ds-24 py-ds-24 space-y-ds-24">
+			<div className="w-full px-ds-24 space-y-ds-24">
 				{Array.from({ length: 6 }).map((_, i) => (
-					<Card key={i} className="w-full">
-						<div className="flex flex-col lg:flex-row">
+					<Card
+						key={i}
+						className="w-full bg-white border-border/60 shadow-sm"
+					>
+						<div className="flex-y lg:flex-row">
 							<div className="lg:w-1/3 xl:w-1/4 p-6 lg:pr-0">
 								<Skeleton className="h-48 lg:h-full min-h-[200px] w-full rounded-lg" />
 							</div>
 
-							<CardContent className="flex-1">
+							<CardContent className="flex-1 pt-ds-24">
 								<div className="space-y-ds-16">
 									<div className="flex items-center justify-between flex-wrap gap-ds-8">
 										<Skeleton className="h-7 w-20 rounded-full" />

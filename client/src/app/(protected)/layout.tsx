@@ -26,13 +26,7 @@ const ProtectedLayout = async (props: ProtectedLayoutProps) => {
 	const branding = await getSiteBranding();
 
 	const logoElement = branding.logoUrl ? (
-		<Image
-			src={branding.logoUrl}
-			alt="Logo"
-			width={128}
-			height={128}
-			className="object-contain"
-		/>
+		<Image src={branding.logoUrl} alt="Logo" width={128} height={26} />
 	) : undefined;
 
 	return (

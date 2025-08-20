@@ -11,8 +11,8 @@ const getSourceConfig = (source: string) => {
 		case 'react':
 			return {
 				name: 'React',
-				bgColor: 'bg-blue-500',
-				textColor: 'text-white',
+				bgColor: 'bg-[#61dbfb]',
+				textColor: 'text-black',
 			};
 		case 'nextjs':
 			return {
@@ -23,7 +23,7 @@ const getSourceConfig = (source: string) => {
 		case 'wordpress':
 			return {
 				name: 'WordPress',
-				bgColor: 'bg-blue-600',
+				bgColor: 'bg-[#21759b]',
 				textColor: 'text-white',
 			};
 		default:
@@ -39,7 +39,7 @@ export function NewsItem({ item }: NewsItemProps) {
 	const sourceConfig = getSourceConfig(item.source);
 
 	return (
-		<Card className="w-full hover:scale-[1.005] hover:delay-300 transition-transform duration-300 delay-0">
+		<Card className="w-full bg-white hover:scale-[1.005] hover:shadow-xl hover:delay-300 transition-all duration-300 delay-0 border-border/60 shadow-sm">
 			<div className="flex flex-col lg:flex-row">
 				{item.socialImage && (
 					<div className="lg:w-1/3 xl:w-1/4 p-ds-24 lg:pr-0">

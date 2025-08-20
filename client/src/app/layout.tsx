@@ -24,7 +24,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				suppressHydrationWarning
-				className={`${font.className} font-base bg-background relative flex max-h-dvh min-h-dvh w-full flex-col items-center overflow-hidden antialiased`}
+				className={`${font.className} font-base bg-secondary/20 relative flex max-h-dvh min-h-dvh w-full flex-col items-center overflow-hidden antialiased`}
 			>
 				<AuthProvider>{children}</AuthProvider>
 			</body>

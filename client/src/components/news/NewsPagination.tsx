@@ -45,7 +45,7 @@ export const NewsPagination = ({
 	const showFirstPageWithEllipsis = currentPage > 2;
 
 	return (
-		<PaginationContent className="rounded-full border-border/60 border bg-background shadow-xl px-1 py-1 gap-0.5 mx-auto w-fit">
+		<PaginationContent className="rounded-full border-border border bg-background shadow-xl px-1 py-1 gap-0.5 mx-auto w-fit">
 			<PaginationItem>
 				<PaginationPrevious
 					href="#"
