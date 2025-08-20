@@ -3,7 +3,8 @@ export interface RSSItem {
 	link: string;
 	description: string;
 	pubDate: string;
-	source: 'react' | 'nextjs';
+	source: 'react' | 'nextjs' | 'wordpress';
+	socialImage?: string;
 }
 
 export interface RssFeed {
@@ -18,7 +19,7 @@ export interface RssFeed {
 export interface RssChannelConfig {
 	name: string;
 	url: string;
-	category: 'react' | 'nextjs';
+	category: 'react' | 'nextjs' | 'wordpress';
 }
 
 export interface ApiError {

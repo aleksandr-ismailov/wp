@@ -23,7 +23,12 @@ const SidebarColumn = ({ content }: SidebarColumnProps) => {
 		return null;
 	}
 
-	return <div dangerouslySetInnerHTML={{ __html: cleanHTML }} />;
+	return (
+		<div
+			className="max-h-full overflow-hidden pb-ds-16"
+			dangerouslySetInnerHTML={{ __html: cleanHTML }}
+		/>
+	);
 };
 
 export default SidebarColumn;

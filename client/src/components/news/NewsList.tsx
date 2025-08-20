@@ -6,18 +6,18 @@ export const NewsList = async () => {
 	const items = await fetchRSSFeeds();
 
 	return (
-		<div className="flex-1 overflow-y-auto max-h-full min-h-0 flex flex-wrap items-stretch gap-6 justify-center">
-			{items.length === 0 ? (
-				<Alert>
-					<AlertDescription>No news available</AlertDescription>
-				</Alert>
-			) : (
-				items.map((item) => (
-					<div key={item.link} className="w-[30%]">
-						<NewsItem item={item} />
-					</div>
-				))
-			)}
+		<div className="flex-1 overflow-y-auto max-h-full min-h-0">
+			<div className="w-full px-ds-24 py-ds-24 space-y-ds-24">
+				{items.length === 0 ? (
+					<Alert>
+						<AlertDescription>No news available</AlertDescription>
+					</Alert>
+				) : (
+					items.map((item) => (
+						<NewsItem key={item.link} item={item} />
+					))
+				)}
+			</div>
 		</div>
 	);
 };
