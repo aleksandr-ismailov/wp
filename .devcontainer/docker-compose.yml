@@ -27,6 +27,7 @@ services:
             SCRIPT_DEBUG: 1
             WORDPRESS_CONFIG_EXTRA: |
                 define( 'WP_DEVELOPMENT_MODE', 'theme' );
+                define( 'JWT_AUTH_SECRET_KEY', 'dev-jwt-secret-key-2025' );
         command: bash -c "curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && chmod +x /usr/local/bin/wp && docker-entrypoint.sh apache2-foreground"
         volumes:
             - wordpress_data:/var/www/html

@@ -23,4 +23,9 @@
 		<exclude-pattern>*</exclude-pattern>
 	</rule>
 
+	<!-- Disable WordPress file naming rules for our custom classes -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>wp-content/plugins/client-api-core/includes/*</exclude-pattern>
+	</rule>
+
 </ruleset>

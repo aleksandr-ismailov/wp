@@ -13,9 +13,13 @@ git config --global --unset-all user.name || true
 git config --global --unset-all user.email || true
 git config --global core.editor "nano"
 
-if [ -f "composer.json" ]; then
-    composer install --optimize-autoloader
-fi
+composer install
+
+for plugin_dir in wp-content/plugins/*/; do
+    if [ -f "$plugin_dir/composer.json" ]; then
+        (cd "$plugin_dir" && composer install)
+    fi
+done
 
 yarn install
 

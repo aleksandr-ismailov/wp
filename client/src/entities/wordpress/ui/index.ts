@@ -1,0 +1,1 @@
+export { WordPressContent } from './WordPressContent';
