@@ -17,32 +17,13 @@ abstract class ApplicationController extends \WP_REST_Controller {
 	}
 
 	public function authenticate_user() {
-		return is_user_logged_in();
-	}
-
-	public function authenticate_with_jwt( $request ) {
-		$auth_header = $request->get_header( 'Authorization' );
-
-		if ( empty( $auth_header ) || 0 !== strpos( $auth_header, 'Bearer ' ) ) {
-			return $this->render_error( 'Authorization token required', 401 );
-		}
-
-		$token = trim( substr( $auth_header, 7 ) );
-
-		if ( empty( $token ) ) {
-			return $this->render_error( 'Authorization token required', 401 );
-		}
-
 		$auth_service = new \ClientAPI\Services\AuthService();
-		$user_id      = $auth_service->validate_jwt_token( $token );
+		$user         = $auth_service->authenticate_request();
 
-		if ( ! $user_id ) {
-			return $this->render_error( 'Invalid token', 401 );
-		}
-
-		wp_set_current_user( $user_id );
-		return true;
+		return $user ? true : is_user_logged_in();
 	}
+
+
 
 	protected function parse_array_param( $request, $param_name, $fallback = [] ) {
 		$value = $request->get_param( $param_name );

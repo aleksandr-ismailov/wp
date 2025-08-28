@@ -51,8 +51,6 @@ add_action(
 	}
 );
 
-
-
 /**
  * Register custom meta fields for pages
  */

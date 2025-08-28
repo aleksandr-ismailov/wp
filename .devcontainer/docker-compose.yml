@@ -28,6 +28,10 @@ services:
             WORDPRESS_CONFIG_EXTRA: |
                 define( 'WP_DEVELOPMENT_MODE', 'theme' );
                 define( 'JWT_AUTH_SECRET_KEY', 'dev-jwt-secret-key-2025' );
+                define( 'AUTH0_DOMAIN', 'dev-agvaj01f6q6tsbg3.us.auth0.com' );
+                define( 'AUTH0_CLIENT_ID', 'hQNJlUaR2TQJ0k27e9CeSETXEqWUH58y' );
+                define( 'AUTH0_CLIENT_SECRET', 'f8qVsH5D44QcOldaQ_O-5NTL2eKFVNvO66uXdrSCC9kwov8SVGoGoHASI0373_1m' );
+                define( 'AUTH0_AUDIENCE', 'https://wordpress-api.local/api' );
         command: bash -c "curl -sL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && chmod +x /usr/local/bin/wp && docker-entrypoint.sh apache2-foreground"
         volumes:
             - wordpress_data:/var/www/html

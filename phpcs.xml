@@ -13,6 +13,8 @@
 	<exclude-pattern>wp-content/plugins/akismet</exclude-pattern>
 	<exclude-pattern>wp-content/plugins/hello.php</exclude-pattern>
 
+
+
 	<!-- Make unused parameters an error instead of warning -->
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
 		<type>error</type>

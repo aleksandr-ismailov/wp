@@ -19,7 +19,6 @@ export interface ApiError {
 	message: string;
 }
 
-// TODO: move to entities/
 export interface AuthResponse {
 	accessToken: string;
 	tokenType: string;

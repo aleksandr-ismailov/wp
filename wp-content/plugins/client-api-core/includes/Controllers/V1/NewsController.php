@@ -14,7 +14,7 @@ class NewsController extends ApplicationController {
 			[
 				'methods'             => 'GET',
 				'callback'            => [ $this, 'get_items' ],
-				'permission_callback' => [ $this, 'authenticate_with_jwt' ],
+				'permission_callback' => [ $this, 'authenticate_user' ],
 				'args'                => [
 					'tags'     => [
 						'validate_callback' => function ( $param ) {

@@ -13,7 +13,7 @@ class SidebarController extends ApplicationController {
 			[
 				'methods'             => 'GET',
 				'callback'            => [ $this, 'get_sidebars' ],
-				'permission_callback' => [ $this, 'authenticate_with_jwt' ],
+				'permission_callback' => [ $this, 'authenticate_user' ],
 			]
 		);
 	}

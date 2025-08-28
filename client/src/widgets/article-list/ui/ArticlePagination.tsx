@@ -41,7 +41,7 @@ export const ArticlePagination = (props: ArticlePaginationProps) => {
 		<PaginationContent className="rounded-full border-border border bg-background shadow-xl px-ds-4 py-ds-4 gap-ds-2 mx-auto w-fit">
 			<PaginationItem>
 				<PaginationPrevious
-					href={currentPage > 1 ? `/news?page=${currentPage - 1}` : '#'}
+					href={currentPage > 1 ? `/articles?page=${currentPage - 1}` : '#'}
 					className={
 						currentPage === 1
 							? 'pointer-events-none opacity-50'
@@ -53,7 +53,7 @@ export const ArticlePagination = (props: ArticlePaginationProps) => {
 			{showFirstPageWithEllipsis && (
 				<>
 					<PaginationItem>
-						<PaginationLink href="/news?page=1">1</PaginationLink>
+						<PaginationLink href="/articles?page=1">1</PaginationLink>
 					</PaginationItem>
 					<PaginationItem>
 						<PaginationEllipsis />
@@ -64,7 +64,7 @@ export const ArticlePagination = (props: ArticlePaginationProps) => {
 			{pageNumbers.map((pageNumber) => (
 				<PaginationItem key={pageNumber}>
 					<PaginationLink
-						href={`/news?page=${pageNumber}`}
+						href={`/articles?page=${pageNumber}`}
 						isActive={pageNumber === currentPage}
 					>
 						{pageNumber}
@@ -80,7 +80,7 @@ export const ArticlePagination = (props: ArticlePaginationProps) => {
 
 			<PaginationItem>
 				<PaginationNext
-					href={hasMore ? `/news?page=${currentPage + 1}` : '#'}
+					href={hasMore ? `/articles?page=${currentPage + 1}` : '#'}
 					className={
 						!hasMore ? 'pointer-events-none opacity-50' : 'cursor-pointer'
 					}

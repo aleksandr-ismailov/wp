@@ -14,7 +14,7 @@ class PageController extends ApplicationController {
 				'methods'             => 'GET',
 				'callback'            => [ $this, 'get_item' ],
 				'permission_callback' => function ( $request ) {
-					return $this->is_public_page( $request ) ? true : $this->authenticate_with_jwt( $request );
+					return $this->is_public_page( $request ) ? true : $this->authenticate_user();
 				},
 			]
 		);

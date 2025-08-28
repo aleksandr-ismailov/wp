@@ -1,4 +1,4 @@
-import { apiRoutes } from '@/shared/routes';
+import { apiRoutes, appRoutes } from '@/shared/routes';
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import type { AuthResponse } from '../types';
@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
 		strategy: 'jwt',
 	},
 	pages: {
-		signIn: '/sign-in',
+		signIn: appRoutes.signInPath(),
 	},
 	callbacks: {
 		async jwt({ token, user }) {
